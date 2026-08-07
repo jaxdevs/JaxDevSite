@@ -1010,29 +1010,3 @@ em {
         letter-spacing: -1px;
     }
 }
-
-.music-player {
-    position: fixed;
-    right: 22px;
-    bottom: 22px;
-    width: min(340px, calc(100vw - 44px));
-    padding: 14px;
-    background: rgba(255, 252, 255, .88);
-    border: 2px solid var(--ink);
-    border-radius: 20px;
-    box-shadow: 5px 5px 0 var(--ink);
-    backdrop-filter: blur(10px);
-    z-index: 100;
-}
-
-.music-label {
-    margin: 0 0 8px;
-    color: #8d6fa8;
-    font: 500 10px var(--mono);
-    letter-spacing: 1px;
-}
-
-.music-player iframe {
-    display: block;
-    border-radius: 12px;
-}
