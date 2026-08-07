@@ -1,0 +1,202 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Contact | JaxDev</title>         
+        <link rel="stylesheet" href="style.css"> 
+        <style>
+        .contact-page {
+            padding: 70px 0 100px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            gap: 70px;
+            align-items: start;
+        }
+
+        .contact-info p {
+            line-height: 1.7;
+            color: #5a5d69;
+            margin-bottom: 28px;
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .contact-item {
+            border-top: 2px solid var(--ink);
+            padding-top: 12px;
+        }
+
+        .contact-item h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .contact-item p {
+            margin: 0;
+            color: #666;
+            font-size: 15px;
+        }
+
+        .contact-card {
+            background: var(--cream);
+            padding: 40px;
+            border-radius: 22px;
+            transform: rotate(-1deg);
+            box-shadow: 8px 8px 0 var(--ink);
+            position: relative;
+        }
+
+        .contact-card::before {
+            content: "✦";
+            position: absolute;
+            right: -18px;
+            top: -18px;
+            font-size: 42px;
+            color: var(--orange);
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font: 500 12px var(--mono);
+            letter-spacing: 1px;
+        }
+
+        .contact-card input,
+        .contact-card textarea {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid var(--ink);
+            border-radius: 10px;
+            background: white;
+            font-family: var(--display);
+            font-size: 15px;
+            transition: .2s;
+        }
+
+        .contact-card textarea {
+            resize: vertical;
+            min-height: 180px;
+        }
+
+        .contact-card input:focus,
+        .contact-card textarea:focus {
+            outline: none;
+            border-color: var(--orange);
+            box-shadow: 0 0 0 4px rgba(248, 201, 255, .35);
+        }
+
+        .contact-note {
+            margin-top: 25px;
+            padding: 16px;
+            background: white;
+            font: 500 11px var(--mono);
+            transform: rotate(-2deg);
+            box-shadow: 3px 3px 0 var(--ink);
+            width: fit-content;
+        }
+
+        @media(max-width:900px){
+
+            .contact-grid{
+                grid-template-columns:1fr;
+                gap:50px;
+            }
+
+            .contact-card{
+                transform:none;
+            }
+
+        }
+    </style>         
+    </head>     
+    <body> 
+        <header class="site-header"> 
+            <a href="index.html" class="logo"> 
+        Jax<span>Dev</span><i></i>  </a> 
+            <nav> 
+                <a href="index.html">Home</a> 
+                <a href="games.html">Games</a> 
+                <a href="about.html">About</a> 
+                <a class="active" href="contact.html">Contact</a> 
+            </nav>             
+            <a class="header-cta" href="#">Discord</a> 
+        </header>         
+        <main class="contact-page"> 
+            <div class="wrap"> 
+                <div class="contact-grid"> 
+                    <div class="contact-info"> 
+                        <p class="eyebrow"> 
+GET IN TOUCH</p> 
+                        <h1>Let's build something awesome.</h1> 
+                        <p> 
+Whether you've found a bug, have a game idea, want to collaborate, or just want to say hello, I'd love to hear from you.</p> 
+                        <div class="contact-list"> 
+                            <div class="contact-item"> 
+                                <h3>Business</h3> 
+                                <p>Collabs, partnerships, sponsorships, commissions.</p> 
+                            </div>                             
+                            <div class="contact-item"> 
+                                <h3>Support</h3> 
+                                <p>Questions, bugs, feedback, account issues.</p> 
+                            </div>                             
+                            <div class="contact-item"> 
+                                <h3>Response Time</h3> 
+                                <p>Usually within 24 hours.</p> 
+                            </div>                             
+                        </div>                         
+                        <div class="contact-note"> 
+                            💜 Every message is read personally.
+</div>                         
+                    </div>                     
+                    <div class="contact-card"> 
+                        <form action="#"> 
+                            <div class="form-group"> 
+                                <label>Name</label>                                 
+                                <input type="text" placeholder="Your name" required> 
+                            </div>                             
+                            <div class="form-group"> 
+                                <label>Email</label>                                 
+                                <input type="email" placeholder="you@example.com" required> 
+                            </div>                             
+                            <div class="form-group"> 
+                                <label>Subject</label>                                 
+                                <input type="text" placeholder="What's this about?" required> 
+                            </div>                             
+                            <div class="form-group"> 
+                                <label>Message</label>                                 
+                                <textarea placeholder="Write your message here..." required></textarea> 
+                            </div>                             
+                            <button class="button primary" type="submit"> 
+                                Send Message
+                                <span>→</span> 
+                            </button>                             
+                        </form>                         
+                    </div>                     
+                </div>                 
+            </div>             
+        </main>         
+        <footer class="site-footer wrap"> 
+            <a class="logo" href="index.html">JAX<span>DEV</span><i></i></a> 
+            <p>Base Made With AI edited in Pinegrow.<br>&copy; <span id="year"></span> Jax Dev.</p> 
+            <div class="socials"> 
+                <a href="https://github.com/jaxdevs">GitHub</a> 
+                <a href="https://youtube.com/@notjaxdev">YouTube</a> 
+                <a href="https://discord.gg/5qxVttwgay">Discord</a> 
+            </div>             
+        </footer>         
+        <script src="script.js"></script>         
+    </body>     
+</html>
