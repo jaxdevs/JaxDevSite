@@ -8,8 +8,13 @@
     --green: #7dbd8b;
     --red: #ff6666;
     --grey: #a3a3a3;
+    --DiscordBlue: #829fff;
     --mono: 'DM Mono',monospace;
     --display: 'Outfit',sans-serif;
+}
+
+.pinkword {
+    color: #f8c9ff;
 }
 
 * {
@@ -186,6 +191,11 @@ em {
     color: #fff;
 }
 
+.DiscordBlue {
+    background: var(--DiscordBlue);
+    color: #fff;
+}
+
 .text-button {
     color: var(--ink);
     padding-inline: 0;
@@ -197,7 +207,7 @@ em {
     height: 405px;
     width: 360px;
     position: relative;
-    background: var(--grey);
+    background: var(--orange);
 
     /* your pink, 72% visible */
     padding: 13px;
@@ -214,7 +224,7 @@ em {
     height: 100%;
     object-fit: cover;
     border-radius: 13px;
-    opacity: 1.;
+    opacity: 1;
 
     /* optional: makes the image slightly transparent */
 }
@@ -849,4 +859,186 @@ em {
     .project-shot {
         min-height: 270px;
     }
+}
+
+.contact-page {
+    padding: 70px 0 100px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: .9fr 1.1fr;
+    gap: 70px;
+    align-items: start;
+}
+
+.contact-info p {
+    line-height: 1.7;
+    color: #5a5d69;
+    margin-bottom: 28px;
+}
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.contact-item {
+    border-top: 2px solid var(--ink);
+    padding-top: 12px;
+}
+
+.contact-item h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.contact-item p {
+    margin: 0;
+    color: #666;
+    font-size: 15px;
+}
+
+.contact-card {
+    background: var(--cream);
+    padding: 40px;
+    border-radius: 22px;
+    transform: rotate(-1deg);
+    box-shadow: 8px 8px 0 var(--ink);
+    position: relative;
+}
+
+.contact-card::before {
+    content: "✦";
+    position: absolute;
+    right: -18px;
+    top: -18px;
+    font-size: 42px;
+    color: var(--orange);
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font: 500 12px var(--mono);
+    letter-spacing: 1px;
+}
+
+.contact-card input,
+.contact-card textarea {
+    width: 100%;
+    padding: 15px 18px;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    background: white;
+    font-family: var(--display);
+    font-size: 15px;
+    transition: .2s;
+}
+
+.contact-card textarea {
+    resize: vertical;
+    min-height: 180px;
+}
+
+.contact-card input:focus,
+.contact-card textarea:focus {
+    outline: none;
+    border-color: var(--orange);
+    box-shadow: 0 0 0 4px rgba(248,201,255,.35);
+}
+
+.contact-note {
+    margin-top: 25px;
+    padding: 16px;
+    background: var(--orange);
+    font: 500 11px var(--mono);
+    transform: rotate(-2deg);
+    box-shadow: 3px 3px 0 var(--ink);
+    width: fit-content;
+}
+
+@media (max-width:900px){
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .contact-card {
+        transform: none;
+    }
+}
+
+.contact-card::before {
+    content: "";
+}
+
+.error-page {
+    min-height: calc(100vh - 88px);
+    padding: 115px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.error-page .intro {
+    margin-bottom: 30px;
+}
+
+.error-number {
+    position: absolute;
+    right: -20px;
+    bottom: -85px;
+    font-size: clamp(180px, 32vw, 480px);
+    font-weight: 800;
+    letter-spacing: -25px;
+    color: var(--orange);
+    opacity: .48;
+    user-select: none;
+    z-index: -1;
+}
+
+@media (max-width: 760px) {
+    .error-page {
+        min-height: calc(100vh - 73px);
+        padding: 80px 0;
+    }
+
+    .error-number {
+        right: 0;
+        bottom: -25px;
+        letter-spacing: -1px;
+    }
+}
+
+.music-player {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    width: min(340px, calc(100vw - 44px));
+    padding: 14px;
+    background: var(--orange);
+
+    /* rgba(255, 252, 255, .88) */
+    border: 2px solid var(--ink);
+    border-radius: 20px;
+    box-shadow: 5px 5px 0 var(--ink);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+.music-label {
+    margin: 0 0 8px;
+    color: var(--ink);
+    font: 500 10px var(--mono);
+    letter-spacing: 1px;
+}
+
+.music-player iframe {
+    display: block;
+    border-radius: 12px;
 }

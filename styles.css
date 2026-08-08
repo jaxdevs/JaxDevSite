@@ -9,8 +9,13 @@
     --red: #ff6666;
     --grey: #a3a3a3;
     --DiscordBlue: #829fff;
+    --DarkerWhite: #f7f7f7;
     --mono: 'DM Mono',monospace;
     --display: 'Outfit',sans-serif;
+}
+
+.pinkword {
+    color: #f8c9ff;
 }
 
 * {
@@ -203,7 +208,7 @@ em {
     height: 405px;
     width: 360px;
     position: relative;
-    background: var(--orange);
+    background: var(--DarkerWhite);
 
     /* your pink, 72% visible */
     padding: 13px;
@@ -1032,6 +1037,80 @@ em {
     color: var(--ink);
     font: 500 10px var(--mono);
     letter-spacing: 1px;
+}
+
+.music-player iframe {
+    display: block;
+    border-radius: 12px;
+}
+
+.music-widget {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 100;
+}
+
+.music-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    background: var(--orange);
+    color: var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+    font: 700 12px var(--mono);
+    cursor: pointer;
+}
+
+.music-toggle span:first-child {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.music-player {
+    display: none;
+    width: min(340px, calc(100vw - 44px));
+    margin-bottom: 16px;
+    padding: 14px;
+    background: rgba(255, 252, 255, .92);
+    border: 2px solid var(--ink);
+    border-radius: 20px;
+    box-shadow: 5px 5px 0 var(--ink);
+    backdrop-filter: blur(10px);
+}
+
+.music-widget.is-open .music-player {
+    display: block;
+}
+
+.music-widget.is-open .music-toggle {
+    display: none;
+}
+
+.music-player-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.music-label {
+    margin: 0;
+    color: #8D6FA8;
+    font: 500 10px var(--mono);
+    letter-spacing: 1px;
+}
+
+.music-close {
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-size: 25px;
+    line-height: 1;
+    cursor: pointer;
 }
 
 .music-player iframe {

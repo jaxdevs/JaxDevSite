@@ -11,6 +11,21 @@
         <link rel="stylesheet" href="styles.css"/>
         <link rel="icon" type="image/png" href="/Assets/JaxIcon.png">
     </head>
+    <script>
+  const musicWidget = document.querySelector(".music-widget");
+  const musicToggle = document.querySelector("#music-toggle");
+  const musicClose = document.querySelector("#music-close");
+
+  musicToggle.addEventListener("click", () => {
+    musicWidget.classList.add("is-open");
+    musicToggle.setAttribute("aria-expanded", "true");
+  });
+
+  musicClose.addEventListener("click", () => {
+    musicWidget.classList.remove("is-open");
+    musicToggle.setAttribute("aria-expanded", "false");
+  });
+</script>
     <body>
         <header class="site-header">
             <a class="logo" href="index.html" aria-label="Jax Dev home">JAX<span>DEV</span><i></i></a>
@@ -25,7 +40,7 @@
             <section class="hero wrap pinegrow-ui-helper-relative">
                 <div class="hero-copy">
                     <p class="eyebrow">I WORK ALONE (BOI IM SO TUFF BOI)</p>
-                    <h1>I make games<br>with <em>no skill.</em></h1>
+                    <h1>I make <span class="pinkword">games.</span></h1>
                     <p class="intro">Yo! I&rsquo;m jax, a game dev making shit, and figuring out how to not be a shit dev.</p>
                     <div class="hero-actions">
                         <a class="button primary" href="games.html">Check my games <span>&rarr;</span></a>
@@ -33,7 +48,7 @@
                     </div>
                 </div>
                 <div class="hero-art tilt-card">
-                    <img src="Assets/Discordbanner.png" alt="Retro arcade game room" class="">
+                    <img src="Assets/Favicon.png" alt="Retro arcade game room" class="">
                 </div>
             </section>
             <section class="featured-section">
@@ -62,7 +77,7 @@
             <section class="now-section wrap">
                 <div class="now-card">
                     <p class="eyebrow">I know how to code html btw</p>
-                    <h2>Just left this shit here but</h2>
+                    <h2>Just left this here but</h2>
                     <p>Umm i guess please subscribe to my YouTube channel found in footer but yea</p>
                     <a class="button DiscordBlue" href="https://discord.gg/5qxVttwgay">Join My Discord<span>&rarr;</span></a>
                 </div>
@@ -82,10 +97,19 @@
             </div>
         </footer>
         <script src="script.js"></script>
-        <div class="music-player">
-            <p class="music-label">Minecraft Super Tuff</p>
-            <iframe src="https://open.spotify.com/embed/album/1TtdtRpeNYliHviOnhWdL7?utm_source=generator" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+        <div class="music-widget">
+            <button class="music-toggle" id="music-toggle" aria-expanded="false">
+                <span>♪</span>
+                <span class="music-toggle-text">Music</span>
+            </button>
+            <div class="music-player" id="music-player">
+                <div class="music-player-top">
+                    <p class="music-label">JAX IS LISTENING TO</p>
+                    <button class="music-close" id="music-close" aria-label="Close music player">×</button>
+                </div>
+                <iframe src="https://open.spotify.com/embed/album/1TtdtRpeNYliHviOnhWdL7?utm_source=generator" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Spotify music player">
 </iframe>
+            </div>
         </div>
     </body>
 </html>
