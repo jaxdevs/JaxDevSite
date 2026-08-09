@@ -9,8 +9,13 @@
     --red: #ff6666;
     --grey: #a3a3a3;
     --DiscordBlue: #829fff;
+    --DarkerWhite: #f7f7f7;
     --mono: 'DM Mono',monospace;
     --display: 'Outfit',sans-serif;
+}
+
+.pinkword {
+    color: #f8c9ff;
 }
 
 * {
@@ -203,7 +208,7 @@ em {
     height: 405px;
     width: 360px;
     position: relative;
-    background: var(--orange);
+    background: var(--DarkerWhite);
 
     /* your pink, 72% visible */
     padding: 13px;
@@ -952,7 +957,7 @@ em {
 .contact-note {
     margin-top: 25px;
     padding: 16px;
-    background: white;
+    background: var(--orange);
     font: 500 11px var(--mono);
     transform: rotate(-2deg);
     box-shadow: 3px 3px 0 var(--ink);
@@ -972,4 +977,67 @@ em {
 
 .contact-card::before {
     content: "";
+}
+
+.error-page {
+    min-height: calc(100vh - 88px);
+    padding: 115px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.error-page .intro {
+    margin-bottom: 30px;
+}
+
+.error-number {
+    position: absolute;
+    right: -20px;
+    bottom: -85px;
+    font-size: clamp(180px, 32vw, 480px);
+    font-weight: 800;
+    letter-spacing: -25px;
+    color: var(--orange);
+    opacity: .48;
+    user-select: none;
+    z-index: -1;
+}
+
+@media (max-width: 760px) {
+    .error-page {
+        min-height: calc(100vh - 73px);
+        padding: 80px 0;
+    }
+
+    .error-number {
+        right: 0;
+        bottom: -25px;
+        letter-spacing: -1px;
+    }
+}
+
+.music-player {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    width: min(340px, calc(100vw - 44px));
+    padding: 14px;
+    background: rgba(255, 252, 255, .88);
+    border: 2px solid var(--ink);
+    border-radius: 20px;
+    box-shadow: 5px 5px 0 var(--ink);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+.music-label {
+    margin: 0 0 8px;
+    color: #8d6fa8;
+    font: 500 10px var(--mono);
+    letter-spacing: 1px;
+}
+
+.music-player iframe {
+    display: block;
+    border-radius: 12px;
 }
