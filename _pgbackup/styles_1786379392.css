@@ -1079,7 +1079,7 @@ em {
 }
 
 body {
-    background: var(--paper)/*radial-gradient(circle at top right, #f8c9ff55, transparent 32%)*/, var(--paper);
+    background: var(--cream)/*radial-gradient(circle at top right, #f8c9ff55, transparent 32%)*/, var(--paper);
     color: var(--ink);
     font-family: var(--display);
     font-weight: 600;
