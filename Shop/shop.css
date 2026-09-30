@@ -1,0 +1,636 @@
+/* ==========================================================
+   shop.css
+   Load AFTER style.css. Uses the same tokens (--ink, --orange,
+   --blue, --pixel, ...) so it matches the rest of the site.
+   Nothing in style.css is changed.
+   ========================================================== */
+
+/* ---------- Small site-wide polish ---------- */
+
+::selection {
+    background: var(--orange);
+    color: var(--ink);
+}
+
+:focus-visible {
+    outline: 3px solid #c966d7;
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+.skip-link {
+    position: absolute;
+    left: 16px;
+    top: -60px;
+    z-index: 100;
+    background: var(--ink);
+    color: #fff;
+    font: 400 12px var(--pixel);
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: top .15s;
+}
+
+.skip-link:focus {
+    top: 12px;
+}
+
+/* ---------- Shop page layout ---------- */
+
+.shop-page {
+    padding: 60px 0 105px;
+}
+
+.shop-tools {
+    display: grid;
+    gap: 18px;
+    margin: 38px 0 34px;
+}
+
+.shop-search {
+    position: relative;
+}
+
+.shop-search input {
+    width: 100%;
+    padding: 15px 18px 15px 50px;
+    border: 3px solid var(--ink);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--ink);
+    font: 600 15px var(--display);
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: box-shadow .2s, transform .2s;
+}
+
+.shop-search input::placeholder {
+    color: #8b84a3;
+}
+
+.shop-search input:focus {
+    outline: none;
+    border-color: #c966d7;
+    box-shadow: 4px 4px 0 var(--ink), 0 0 0 5px #f8c9ff99;
+}
+
+.shop-search svg {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    stroke: var(--ink);
+    fill: none;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    pointer-events: none;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chip {
+    font: 400 11px var(--pixel);
+    letter-spacing: .4px;
+    color: var(--ink);
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s, background .15s;
+}
+
+.chip:hover {
+    background: var(--cream);
+}
+
+.chip[aria-pressed="true"] {
+    background: var(--orange);
+    box-shadow: 2px 2px 0 var(--ink);
+    transform: translate(-1px, -1px);
+}
+
+.chip small {
+    opacity: .55;
+    margin-left: 4px;
+    font: inherit;
+}
+
+.result-count {
+    font: 400 11px var(--pixel);
+    color: #6d6588;
+    margin: 0;
+}
+
+/* ---------- Product grid + cards ---------- */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 28px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: var(--ink);
+    text-decoration: none;
+    background: #fff;
+    border: 3px solid var(--ink);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 6px 6px 0 var(--ink);
+    transition: transform .18s, box-shadow .18s;
+}
+
+.product-card:hover,
+.product-card:focus-visible {
+    transform: translate(-3px, -3px) rotate(-.4deg);
+    box-shadow: 9px 9px 0 var(--ink);
+}
+
+.product-card:active {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 var(--ink);
+}
+
+.thumb {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-bottom: 3px solid var(--ink);
+    background: var(--blue);
+    overflow: hidden;
+}
+
+.thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Shown when a product has no image yet */
+.thumb-placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    font: 400 44px var(--pixel);
+    color: var(--ink);
+    text-shadow: 3px 3px 0 #ffffffaa;
+    background-image:
+        radial-gradient(circle at 20% 25%, #ffffff66 0 10px, transparent 11px),
+        radial-gradient(circle at 80% 70%, #ffffff55 0 16px, transparent 17px);
+}
+
+.tone-0 { background-color: var(--orange); }
+.tone-1 { background-color: var(--blue); }
+.tone-2 { background-color: var(--yellow); }
+.tone-3 { background-color: var(--green); }
+
+.price-badge {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    font: 400 13px var(--pixel);
+    background: var(--ink);
+    color: #fff;
+    border-radius: 999px;
+    padding: 7px 12px;
+    border: 2px solid #fff;
+    box-shadow: 2px 2px 0 #00000055;
+}
+
+.price-badge.is-free {
+    background: var(--green);
+    color: var(--ink);
+    border-color: var(--ink);
+}
+
+.product-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px 18px 20px;
+    flex: 1;
+}
+
+.product-body h3 {
+    font-size: 18px;
+    line-height: 1.3;
+    letter-spacing: .3px;
+    margin: 0;
+    text-shadow: none;
+}
+
+.product-body p {
+    margin: 0;
+    color: #5a5d69;
+    line-height: 1.5;
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-meta {
+    margin-top: auto;
+    padding-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font: 400 10px var(--pixel);
+    color: #6d6588;
+}
+
+.pill {
+    font: 400 10px var(--pixel);
+    padding: 5px 9px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    background: var(--cream);
+    color: var(--ink);
+}
+
+/* ---------- Empty state ---------- */
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 24px;
+    background: var(--yellow);
+    border: 3px solid var(--ink);
+    border-radius: 20px;
+    box-shadow: 7px 7px 0 var(--ink);
+}
+
+.empty-state h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    margin: 0 0 20px;
+    color: #4d4560;
+}
+
+/* ---------- Product dialog ---------- */
+
+.product-modal {
+    width: min(900px, calc(100% - 28px));
+    max-height: calc(100dvh - 28px);
+    padding: 0;
+    color: var(--ink);
+    background: var(--paper);
+    border: 3px solid var(--ink);
+    border-radius: 22px;
+    box-shadow: 9px 9px 0 var(--ink);
+    overflow: auto;
+}
+
+.product-modal[open] {
+    animation: pop-in .22s cubic-bezier(.2, 1.3, .4, 1);
+}
+
+.product-modal::backdrop {
+    background: rgba(43, 36, 80, .6);
+    backdrop-filter: blur(3px);
+}
+
+@keyframes pop-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(.97);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 3;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    background: var(--orange);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    box-shadow: 2px 2px 0 var(--ink);
+    font: 400 16px var(--pixel);
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 var(--ink);
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+}
+
+.modal-media {
+    padding: 22px;
+    background: var(--cream);
+    border-right: 3px solid var(--ink);
+}
+
+.modal-main-image {
+    aspect-ratio: 4 / 3;
+    border: 3px solid var(--ink);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--blue);
+}
+
+.modal-main-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-thumbs {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.modal-thumbs button {
+    width: 64px;
+    height: 50px;
+    padding: 0;
+    border: 2px solid var(--ink);
+    border-radius: 9px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #fff;
+    opacity: .7;
+}
+
+.modal-thumbs button[aria-current="true"] {
+    opacity: 1;
+    box-shadow: 2px 2px 0 var(--ink);
+}
+
+.modal-thumbs img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.modal-info {
+    padding: 32px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.modal-info h2 {
+    font-size: clamp(26px, 3.6vw, 36px);
+    margin: 0;
+    padding-right: 34px;
+    text-shadow: 2px 2px 0 #ead8f5;
+}
+
+.modal-price {
+    font: 400 26px var(--pixel);
+    color: #b65dc8;
+    margin: 0;
+}
+
+.modal-price.is-free {
+    color: #4f9a5c;
+}
+
+.modal-desc p {
+    margin: 0 0 10px;
+    line-height: 1.6;
+    color: #4d4b5c;
+}
+
+.includes {
+    list-style: none;
+    margin: 0;
+    padding: 14px 16px;
+    display: grid;
+    gap: 8px;
+    background: #fff;
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+}
+
+.includes li {
+    position: relative;
+    padding-left: 22px;
+    line-height: 1.4;
+    font-size: 14px;
+}
+
+.includes li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: .35em;
+    width: 9px;
+    height: 9px;
+    background: var(--orange);
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+}
+
+.modal-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.modal-actions {
+    margin-top: auto;
+    display: grid;
+    gap: 12px;
+    padding-top: 6px;
+}
+
+.modal-actions .button {
+    justify-content: center;
+    font-size: 15px;
+}
+
+.button.is-disabled {
+    background: #e7e2ee;
+    color: #7d7692;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.button.is-disabled:hover {
+    transform: none;
+}
+
+.fine-print {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #6d6588;
+    margin: 0;
+}
+
+.fine-print a {
+    color: inherit;
+}
+
+/* ---------- Thanks page ---------- */
+
+.thanks-page {
+    min-height: calc(100vh - 88px);
+    display: grid;
+    place-items: center;
+    padding: 60px 0 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+.thanks-card {
+    position: relative;
+    width: min(620px, 100%);
+    padding: 44px 40px 40px;
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    border-radius: 22px;
+    box-shadow: 9px 9px 0 var(--ink);
+    text-align: center;
+}
+
+.thanks-card h1 {
+    font-size: clamp(38px, 8vw, 58px);
+    margin-bottom: 14px;
+}
+
+.thanks-card .intro {
+    margin: 0 auto 26px;
+}
+
+.download-box {
+    display: grid;
+    gap: 12px;
+    padding: 22px;
+    margin-bottom: 22px;
+    background: #fff;
+    border: 3px solid var(--ink);
+    border-radius: 16px;
+}
+
+.download-box h2 {
+    font-size: 22px;
+    margin: 0;
+    text-shadow: none;
+}
+
+.download-box .button {
+    justify-content: center;
+}
+
+.thanks-tip {
+    display: inline-block;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 12px 14px;
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    border-radius: 9px;
+    box-shadow: 3px 3px 0 var(--ink);
+    font: 400 11px/1.6 var(--pixel);
+    transform: rotate(-1.2deg);
+}
+
+.confetti {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.confetti i {
+    position: absolute;
+    top: -30px;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(105vh) rotate(540deg);
+    }
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 760px) {
+    .shop-page {
+        padding-top: 42px;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-media {
+        border-right: 0;
+        border-bottom: 3px solid var(--ink);
+        padding: 16px;
+    }
+
+    .modal-info {
+        padding: 24px 20px 24px;
+    }
+
+    .thanks-page {
+        min-height: calc(100vh - 73px);
+    }
+
+    .thanks-card {
+        padding: 36px 22px 30px;
+        box-shadow: 5px 5px 0 var(--ink);
+    }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .confetti {
+        display: none;
+    }
+}
