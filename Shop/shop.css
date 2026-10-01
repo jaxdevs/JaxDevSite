@@ -255,6 +255,12 @@
     color: #6d6588;
 }
 
+.pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
 .pill {
     font: 400 10px var(--pixel);
     padding: 5px 9px;

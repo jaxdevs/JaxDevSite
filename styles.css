@@ -1202,7 +1202,7 @@ em {
 
 .hero-art,
 .portrait-card {
-    background: var(--orange);
+    background: var(--DarkerWhite);
     border: 3px solid var(--ink);
     box-shadow: 8px 8px 0 var(--ink);
 }

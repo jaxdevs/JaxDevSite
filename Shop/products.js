@@ -1,28 +1,8 @@
-/* ==========================================================
-   products.js  -  this is the only file you edit to add items.
-   Copy one product block, paste it, change the values.
-   ========================================================== */
-
 window.SHOP_CONFIG = {
     currency: "USD",
     contactUrl: "../support.html"
 };
 
-/*
-  FIELDS
-  slug         short unique id, lowercase, no spaces (used in the page link)
-  title        product name
-  blurb        one short line shown on the card
-  description  list of paragraphs shown in the popup
-  category     what filter button it appears under
-  price        number in dollars. Use 0 for free.
-  images       list of image paths. First one is the card image. Can be empty.
-  includes     list of what the buyer gets
-  format       small info pill, like "Unity package (.unitypackage)"
-  sold         number you update by hand (there is no server to count it)
-  buy          your Stripe Payment Link (paid items). Leave "" for "Coming soon".
-  file         direct download path (FREE items only, this is public)
-*/
 
 window.PRODUCTS = [
     {
@@ -33,12 +13,11 @@ window.PRODUCTS = [
             "This is placeholder text. Explain what your script does and how to install it.",
             "Free items link straight to a file, so anyone can download them."
         ],
-        category: "script",
+        category: ["script", "free"],
         price: 0,
-        images: [],
+        images: ["../Assets/BroDude.png", "../Assets/PLEASETRISTER.png"],
         includes: ["1 script file", "Short install notes"],
         format: "C# script (.cs)",
-        sold: 25,
         buy: "",
         file: "downloads/sample-free-script.zip"
     },
@@ -55,7 +34,7 @@ window.PRODUCTS = [
         images: [],
         includes: ["Model files (.fbx)", "Textures", "Setup guide"],
         format: "FBX + PNG textures",
-        sold: 3,
+        sold: 0,
         buy: "",
         file: ""
     },
@@ -71,7 +50,7 @@ window.PRODUCTS = [
         images: [],
         includes: ["Shader file", "Example material", "Instructions"],
         format: "Shader (.shader)",
-        sold: 5,
+        sold: 0,
         buy: "",
         file: ""
     },
@@ -82,7 +61,7 @@ window.PRODUCTS = [
         description: [
             "Bundles are a nice way to sell a few related items at a small discount."
         ],
-        category: "bundle",
+        category: ["bundle", "3d model", "shader"],
         price: 4.99,
         images: [],
         includes: ["Everything in the model pack", "Everything in the shader", "Bonus files"],

@@ -1,4 +1,3 @@
-/* shop.js - draws the shop from products.js. No server needed. */
 (function () {
     "use strict";
 
@@ -15,7 +14,6 @@
     var state = { category: "all", query: "" };
     var lastFocused = null;
 
-    /* ---------- helpers ---------- */
 
     function el(tag, attrs, kids) {
         var node = document.createElement(tag);
@@ -45,9 +43,13 @@
         }
     }
 
+    function catsOf(p) { return [].concat(p.category || []); }
+
     function categories() {
         var seen = {};
-        PRODUCTS.forEach(function (p) { seen[p.category] = (seen[p.category] || 0) + 1; });
+        PRODUCTS.forEach(function (p) {
+            catsOf(p).forEach(function (c) { seen[c] = (seen[c] || 0) + 1; });
+        });
         return seen;
     }
 
@@ -61,26 +63,26 @@
         "script": "{ }",
         "shader": "FX",
         "bundle": "+",
-        "graphics": "art"
+        "graphics": "art",
+        "free": "free"
     };
 
     function placeholder(p) {
         return el("div", {
-            class: "thumb-placeholder " + toneOf(p.category),
+            class: "thumb-placeholder " + toneOf(catsOf(p)[0]),
             "aria-hidden": "true",
-            text: glyphOf[p.category] || p.title.charAt(0).toUpperCase()
+            text: glyphOf[catsOf(p)[0]] || p.title.charAt(0).toUpperCase()
         });
     }
 
     function matches(p) {
-        if (state.category !== "all" && p.category !== state.category) return false;
+        if (state.category !== "all" && catsOf(p).indexOf(state.category) === -1) return false;
         var q = state.query.trim().toLowerCase();
         if (!q) return true;
-        var hay = [p.title, p.blurb, p.category].concat(p.tags || []).join(" ").toLowerCase();
+        var hay = [p.title, p.blurb].concat(catsOf(p), p.tags || []).join(" ").toLowerCase();
         return q.split(/\s+/).every(function (word) { return hay.indexOf(word) !== -1; });
     }
 
-    /* ---------- filter chips ---------- */
 
     function renderChips() {
         var cats = categories();
@@ -99,7 +101,6 @@
         });
     }
 
-    /* ---------- grid ---------- */
 
     function card(p) {
         var thumb = el("div", { class: "thumb" }, [
@@ -110,7 +111,9 @@
         ]);
 
         var meta = el("div", { class: "product-meta" }, [
-            el("span", { class: "pill", text: p.category }),
+            el("span", { class: "pill-row" }, catsOf(p).slice(0, 2).map(function (c) {
+                return el("span", { class: "pill", text: c });
+            })),
             p.sold ? el("span", { text: p.sold + " sold" }) : null
         ]);
 
@@ -142,7 +145,6 @@
         countEl.textContent = list.length + (list.length === 1 ? " item" : " items");
     }
 
-    /* ---------- product dialog ---------- */
 
     function buyControl(p) {
         if (!p.price && p.file) {
@@ -189,11 +191,12 @@
     function fillModal(p) {
         modalBody.textContent = "";
 
-        var facts = el("div", { class: "modal-facts" }, [
-            el("span", { class: "pill", text: p.category }),
+        var facts = el("div", { class: "modal-facts" }, catsOf(p).map(function (c) {
+            return el("span", { class: "pill", text: c });
+        }).concat([
             p.format ? el("span", { class: "pill", text: p.format }) : null,
             p.sold ? el("span", { class: "pill", text: p.sold + " sold" }) : null
-        ]);
+        ]));
 
         var info = el("div", { class: "modal-info" }, [
             el("h2", { id: "modal-title", text: p.title }),
@@ -237,7 +240,6 @@
         if (lastFocused && lastFocused.focus) lastFocused.focus();
     }
 
-    /* ---------- events ---------- */
 
     chipsBox.addEventListener("click", function (e) {
         var btn = e.target.closest(".chip");
@@ -279,7 +281,6 @@
         else if (modal.open) modal.close();
     });
 
-    /* ---------- start ---------- */
 
     renderChips();
     renderGrid();
