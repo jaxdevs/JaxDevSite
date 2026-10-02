@@ -327,22 +327,9 @@
     top: 14px;
     right: 14px;
     z-index: 3;
-    width: 40px;
-    height: 40px;
-    display: grid;
-    place-items: center;
-    background: var(--orange);
-    color: var(--ink);
-    border: 2px solid var(--ink);
-    border-radius: 50%;
-    box-shadow: 2px 2px 0 var(--ink);
+    width: 44px;
+    height: 44px;
     font: 400 16px var(--pixel);
-    cursor: pointer;
-}
-
-.modal-close:hover {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0 var(--ink);
 }
 
 .modal-grid {

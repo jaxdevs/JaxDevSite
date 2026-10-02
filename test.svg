@@ -1,0 +1,10 @@
+<svg class="logo-svg" viewBox="0 0 132 40" role="img" aria-label="JaxDev"
+     xmlns="http://www.w3.org/2000/svg">
+  <text x="2" y="30" font-family="SuperMario256, monospace"
+        font-size="25" letter-spacing="1">
+    <tspan fill="var(--ink)">JAX</tspan><tspan fill="#c966d7">DEV</tspan>
+  </text>
+  <!-- the little dot: a dark copy behind the yellow one gives the hard shadow -->
+  <circle cx="125.5" cy="9.5" r="3.5" fill="var(--ink)"/>
+  <circle cx="124.5" cy="8.5" r="3.5" fill="var(--yellow)"/>
+</svg>

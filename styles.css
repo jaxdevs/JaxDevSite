@@ -22,6 +22,9 @@
     --display: "Trebuchet MS", Arial, sans-serif;
 }
 
+.cream {background: var(--cream); color: var(--ink);}
+.pink {background: var(--orange); color: var(--ink);}
+
 .pinkword {
     color: #f8c9ff;
 }
@@ -1355,4 +1358,44 @@ em {
     .contact-panel {
         box-shadow: 4px 4px 0 var(--ink);
     }
+}
+
+/* ---------- Shaped buttons (octagon / custom shape) ---------- */
+.shape-btn {
+    --shape: polygon(29.3% 0, 70.7% 0, 100% 29.3%, 100% 70.7%,
+                     70.7% 100%, 29.3% 100%, 0 70.7%, 0 29.3%);
+    --fill: var(--orange);
+    --edge: var(--ink);
+    --edge-w: 3px;
+
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;       /* cancels the old round shape */
+    box-shadow: none;       /* the drop-shadow below replaces it */
+    background: none;
+    color: var(--ink);
+    cursor: pointer;
+    filter: drop-shadow(2px 2px 0 var(--ink));
+}
+
+.shape-btn::before,
+.shape-btn::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    clip-path: var(--shape);
+}
+
+.shape-btn::before { inset: 0;             background: var(--edge); }
+.shape-btn::after  { inset: var(--edge-w); background: var(--fill); }
+
+.shape-btn:hover {
+    transform: translate(1px, 1px);
+    filter: drop-shadow(1px 1px 0 var(--ink));
 }
