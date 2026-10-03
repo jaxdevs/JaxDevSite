@@ -1,13 +1,3 @@
-/* ==========================================================
-   styles.css - shared by every page on jaxdev.dev
-   1. Fonts + tokens     5. Buttons
-   2. Base               6. Home page
-   3. Layout helpers     7. Support, 404, Music pages
-   4. Header + footer    8. Responsive
-   Shop-only styles live in shop/shop.css.
-   ========================================================== */
-
-
 /* ---------- 1. Fonts + tokens ---------- */
 
 @font-face {
@@ -27,23 +17,30 @@
 }
 
 :root {
-    /* colors */
-    --ink: #2b2450;
-    --ink-soft: #5a5d69;
+    /* colors - navy + lavender taken from HomePageHeaderImage.jpg */
+    --ink: #161328;
+    --ink-2: #2a2445;
+    --ink-soft: #4f4866;
     --muted: #6d6588;
-    --paper: #fffaff;
-    --cream: #f2e9ff;
+    --paper: #fdf7fe;
+    --cream: #f6e6fa;
     --white: #fff;
-    --pink: #f8c9ff;
-    --accent: #c966d7;
-    --accent-dark: #b65dc8;
-    --lilac: #8e6bb4;
-    --line: #e9d8f0;
+    --accent: #dd91eb;
+    --pink: #ecbcf5;
+    --accent-dark: #b862c9;
+    --lilac: #9a6bb0;
+    --line: #f0d8f6;
+    --on-dark: #fff;
+    --on-dark-soft: #c9bddb;
     --yellow: #ffe490;
     --blue: #9ac5ff;
     --green: #a7e0a0;
     --red: #ff7e8e;
     --card-bg: #f7f7f7;
+
+    /* wavy edge, same feel as the blob in the header picture */
+    --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 100' preserveAspectRatio='none'%3E%3Cpath d='M0 60C220 0 420 -5 640 40S1080 110 1440 30V100H0Z'/%3E%3C/svg%3E");
+    --wave-h: 90px;
 
     /* fonts */
     --pixel: "SuperMario256", monospace;
@@ -186,6 +183,16 @@ em,
 
 /* ---------- 4. Header + footer ---------- */
 
+/* Both are navy bands that stretch edge to edge
+   (the box-shadow + clip-path trick paints the color past the .wrap width) */
+.site-header,
+.site-footer {
+    background: var(--ink);
+    box-shadow: 0 0 0 100vmax var(--ink);
+    clip-path: inset(0 -100vmax);
+    color: var(--on-dark);
+}
+
 .site-header {
     height: var(--header-h);
     display: flex;
@@ -194,15 +201,13 @@ em,
     gap: 24px;
     width: min(1200px, calc(100% - 48px));
     margin-inline: auto;
-    border-bottom: 2px solid var(--line);
 }
 
 .logo {
     font: 400 25px var(--pixel);
     letter-spacing: 1px;
-    color: var(--ink);
+    color: var(--on-dark);
     text-decoration: none;
-    text-shadow: 2px 2px 0 var(--white);
 }
 
 .logo span {
@@ -218,29 +223,28 @@ em,
 .header-cta {
     font: 400 11px var(--pixel);
     letter-spacing: .4px;
-    color: var(--ink);
+    color: var(--on-dark);
     text-decoration: none;
 }
 
 .site-header nav a {
-    opacity: .55;
+    opacity: .7;
     transition: opacity .15s, color .15s;
 }
 
 .site-header nav a:hover,
 .site-header nav a[aria-current="page"] {
-    color: var(--accent-dark);
+    color: var(--accent);
     opacity: 1;
 }
 
 .header-cta {
-    border-bottom: 2px solid var(--ink);
+    border-bottom: 2px solid currentColor;
     padding-bottom: 3px;
 }
 
 .header-cta:hover {
-    color: var(--accent-dark);
-    border-color: var(--accent-dark);
+    color: var(--accent);
 }
 
 .site-footer {
@@ -249,13 +253,12 @@ em,
     align-items: center;
     gap: 16px 24px;
     flex-wrap: wrap;
-    padding: 28px 0 33px;
-    border-top: 2px solid var(--line);
+    padding: 34px 0 38px;
 }
 
 .site-footer p {
     font: 400 10px/1.6 var(--pixel);
-    color: var(--muted);
+    color: var(--on-dark-soft);
     margin: 0;
 }
 
@@ -267,11 +270,11 @@ em,
 
 .socials a {
     font: 400 11px var(--pixel);
-    color: var(--ink);
+    color: var(--on-dark);
 }
 
 .socials a:hover {
-    color: var(--accent-dark);
+    color: var(--accent);
 }
 
 
@@ -306,22 +309,22 @@ em,
 
 .button.primary,
 .button.pink {
-    background: var(--pink);
+    background: var(--accent);
 }
 
 .button.cream {
-    background: var(--cream);
+    background: var(--white);
 }
 
 .button.discord {
-    background: var(--blue);
+    background: var(--white);
 }
 
 /* Octagon icon button, used for the little arrows */
 .shape-btn {
     --shape: polygon(29.3% 0, 70.7% 0, 100% 29.3%, 100% 70.7%,
                      70.7% 100%, 29.3% 100%, 0 70.7%, 0 29.3%);
-    --fill: var(--pink);
+    --fill: var(--accent);
     --edge: var(--ink);
     --edge-w: 3px;
 
@@ -360,46 +363,94 @@ em,
 
 /* ---------- 6. Home page ---------- */
 
-/* Hero */
+/* Hero: full-screen background image with a wobbling logo in the middle */
 .hero {
-    display: grid;
-    grid-template-columns: 1fr auto;
+    position: relative;
+    isolation: isolate;
+    min-height: clamp(560px, 100svh, 980px);
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 70px;
-    padding: 80px 0 105px;
+    justify-content: center;
+    /* the character is on the left of the picture, so push the logo into the space on the right */
+    padding: var(--header-h) 24px 120px clamp(24px, 30vw, 560px);
+    background: var(--ink) url("Assets/HomePageHeaderImage.jpg") left center / cover no-repeat;
+}
+
+/* Wavy navy edge where the picture meets the games section */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -1px;
+    height: var(--wave-h);
+    z-index: -1;
+    background: var(--ink);
+    -webkit-mask: var(--wave) center / 100% 100% no-repeat;
+    mask: var(--wave) center / 100% 100% no-repeat;
+}
+
+.hero-title {
+    margin: 0;
+    line-height: 0;
+    text-shadow: none;
+}
+
+.hero-title img {
+    width: min(700px, 60vw);
+    height: auto;
+    filter: drop-shadow(6px 8px 0 rgba(23, 20, 40, .45));
+    animation: wobble 3.2s ease-in-out infinite;
+}
+
+@keyframes wobble {
+    0%, 100% { transform: rotate(-4deg); }
+    50%      { transform: rotate(4deg); }
 }
 
 .hero-actions {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    justify-content: center;
     gap: 16px;
-    margin-top: 31px;
 }
 
-.hero-art {
-    width: 360px;
-    height: 405px;
-    padding: 13px;
-    background: var(--card-bg);
-    border: 3px solid var(--ink);
-    border-radius: 26px;
-    box-shadow: var(--shadow-lg);
-    transform: rotate(2deg);
-    overflow: hidden;
+/* Header sitting on top of the hero picture (home page only) */
+.site-header.on-hero {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: none;
+    box-shadow: none;
+    clip-path: none;
 }
 
-.hero-art img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 16px;
+.on-hero .logo,
+.on-hero nav a,
+.on-hero .header-cta {
+    text-shadow: 2px 2px 0 var(--ink);
 }
 
-/* Featured games */
+.on-hero nav a {
+    opacity: .85;
+}
+
+/* Featured games - navy section */
 .featured-section {
-    background: var(--cream);
-    padding: 85px 0 95px;
+    background: var(--ink);
+    color: var(--on-dark);
+    padding: 60px 0 calc(110px + var(--wave-h));
+}
+
+.featured-section .eyebrow {
+    color: var(--accent);
+}
+
+.featured-section h2,
+.featured-section h3 {
+    color: var(--on-dark);
+    text-shadow: 3px 3px 0 var(--ink-2);
 }
 
 .section-heading {
@@ -421,7 +472,7 @@ em,
 }
 
 .game-card {
-    color: var(--ink);
+    color: inherit;
     text-decoration: none;
 }
 
@@ -432,10 +483,10 @@ em,
 .game-image {
     height: 290px;
     overflow: hidden;
-    background: var(--blue);
-    border: 3px solid var(--ink);
+    background: var(--accent);
+    border: 3px solid var(--accent);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    box-shadow: 8px 8px 0 var(--ink-2);
 }
 
 .game-card-large .game-image {
@@ -458,7 +509,7 @@ em,
     justify-content: space-between;
     align-items: start;
     gap: 16px;
-    padding: 22px 0 0;
+    padding: 26px 0 0;
 }
 
 .game-meta h3 {
@@ -469,23 +520,61 @@ em,
     max-width: 640px;
     margin: 0;
     line-height: 1.55;
-    color: var(--ink-soft);
+    color: var(--on-dark-soft);
 }
 
-/* "Now" section */
+/* "Now" section - lavender, with wavy edges top and bottom */
 .now-section {
+    position: relative;
+    background: var(--accent);
+    padding: 70px 0 calc(70px + var(--wave-h));
+}
+
+.now-section::before,
+.now-section::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: var(--wave-h);
+    -webkit-mask: var(--wave) center / 100% 100% no-repeat;
+    mask: var(--wave) center / 100% 100% no-repeat;
+}
+
+/* lavender wave rising out of the navy section above */
+.now-section::before {
+    bottom: calc(100% - 3px);
+    background: var(--accent);
+}
+
+/* navy wave leading into the footer, flipped so it curves the other way */
+.now-section::after {
+    bottom: -1px;
+    background: var(--ink);
+    transform: scaleX(-1);
+}
+
+.now-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 60px;
-    padding: 110px 0;
+}
+
+.now-card .eyebrow {
+    color: var(--ink);
+    opacity: .7;
+}
+
+.now-card h2 {
+    text-shadow: 3px 3px 0 var(--pink);
 }
 
 .now-card p:not(.eyebrow) {
     max-width: 440px;
     margin: 0 0 25px;
     line-height: 1.55;
-    color: var(--ink-soft);
+    color: var(--ink);
 }
 
 .photo-stack {
@@ -704,20 +793,25 @@ em,
         font-size: 10px;
     }
 
-    .hero,
-    .now-section {
+    :root {
+        --wave-h: 50px;
+    }
+
+    .now-inner {
         grid-template-columns: 1fr;
         gap: 48px;
     }
 
+    /* on phones there's no room beside the character, so center everything
+       and show the right side of the picture instead */
     .hero {
-        padding: 52px 0 75px;
+        min-height: 520px;
+        padding: 130px 18px 100px;
+        background-position: 72% center;
     }
 
-    .hero-art {
-        width: min(360px, 90%);
-        height: 330px;
-        margin-inline: auto;
+    .hero-title img {
+        width: min(520px, 94vw);
     }
 
     .section-heading {
@@ -731,7 +825,7 @@ em,
     }
 
     .now-section {
-        padding: 75px 0;
+        padding: 50px 0 calc(60px + var(--wave-h));
     }
 
     .photo-stack {
@@ -765,10 +859,6 @@ em,
 }
 
 @media (max-width: 420px) {
-    .hero-art {
-        height: 270px;
-    }
-
     .game-card-large .game-image,
     .game-image {
         height: 230px;
@@ -783,5 +873,9 @@ em,
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
         scroll-behavior: auto !important;
+    }
+
+    .hero-title img {
+        animation: none;
     }
 }
