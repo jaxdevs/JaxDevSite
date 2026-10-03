@@ -1,40 +1,46 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-    <head> 
-        <meta charset="UTF-8"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>JaxDev | 404</title>         
-        <link rel="stylesheet" href="styles.css">
-        <link rel="icon" type="image/png" href="/Assets/JaxIcon.png"> 
-    </head>     
-    <body> 
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JaxDev | 404</title>
+        <meta name="robots" content="noindex">
+        <!-- GitHub Pages shows this page at ANY missing URL (even /a/b/c),
+             so every path here starts with / to always point at the site root. -->
+        <link rel="icon" type="image/png" href="/Assets/JaxIcon.png">
+        <link rel="stylesheet" href="/styles.css">
+    </head>
+    <body>
+        <a class="skip-link" href="#main">Skip to content</a>
+
         <header class="site-header">
-            <a class="logo" href="index.html" aria-label="Jax Dev home">JAX<span>DEV</span><i></i></a>
+            <a class="logo" href="/" aria-label="JaxDev home">JAX<span>DEV</span></a>
             <nav aria-label="Main navigation">
-                <a class="active" href="index.html">Home</a>
-                <a href="games.html">Games</a>
-                <a href="support.html">Support</a>
+                <a href="/">Home</a>
+                <a href="/shop/">Shop</a>
+                <a href="/support">Support</a>
             </nav>
             <a class="header-cta" href="https://discord.gg/5qxVttwgay">Join Discord &#8599;</a>
-        </header>         
-        <main class="error-page wrap"> 
-            <p class="eyebrow">ERROR 404</p> 
-            <h1>Frick.<br><em class="">Page Not Found.</em></h1> 
-            <p class="intro"> 
-      Either this page does not exist yet, or im just stupid and i messed something up. </p> 
-            <a class="button primary" href="index.html"> 
-      Back to home <span>→</span> </a> 
-            <div class="error-number">404</div>             
+        </header>
+
+        <main id="main" class="error-page wrap">
+            <p class="eyebrow">Error 404</p>
+            <h1>Frick.<br><em>Page not found.</em></h1>
+            <p class="intro">Either this page does not exist yet, or im just stupid and i messed something up.</p>
+            <a class="button primary" href="/">Back to home <span>&rarr;</span></a>
+            <div class="error-number" aria-hidden="true">404</div>
         </main>
+
         <footer class="site-footer wrap">
-            <a class="logo" href="index.html">JAX<span>DEV</span><i></i></a>
-            <p>Edited in Pinegrow.<br>&copy; <span id="year"></span> Jax Dev.</p>
+            <a class="logo" href="/">JAX<span>DEV</span></a>
+            <p>Lost?<br>&copy; <span class="year"></span> Jax Dev.</p>
             <div class="socials">
                 <a href="https://github.com/jaxdevs">GitHub</a>
                 <a href="https://youtube.com/@notjaxdev">YouTube</a>
                 <a href="https://discord.gg/5qxVttwgay">Discord</a>
             </div>
         </footer>
-        <script src="script.js"></script>
-    </div>
-</body>
+
+        <script src="/script.js"></script>
+    </body>
+</html>

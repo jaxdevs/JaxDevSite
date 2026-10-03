@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JaxDev | Shop</title>
+    <meta name="description" content="3D models, scripts, and shaders made by JaxDev.">
+    <link rel="canonical" href="https://jaxdev.dev/shop/">
+    <link rel="icon" type="image/png" href="../Assets/JaxIcon.png">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="shop.css">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="JaxDev">
+    <meta property="og:title" content="JaxDev | Shop">
+    <meta property="og:description" content="3D models, scripts, and shaders made by JaxDev.">
+    <meta property="og:url" content="https://jaxdev.dev/shop/">
+    <meta property="og:image" content="https://jaxdev.dev/Assets/EmbedImageV1.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#c966d7">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to shop</a>
+    <header class="site-header">
+        <a class="logo" href="../" aria-label="JaxDev home">JAX<span>DEV</span></a>
+        <nav aria-label="Main navigation">
+            <a href="../">Home</a>
+            <a href="./" aria-current="page">Shop</a>
+            <a href="../support">Support</a>
+        </nav>
+        <a class="header-cta" href="https://discord.gg/5qxVttwgay">Join Discord &#8599;</a>
+    </header>
+
+    <main id="main" class="wrap shop-page">
+        <div class="page-intro">
+            <p class="eyebrow">Please do not resell or reupload the assets</p>
+            <h1>The <em>shop</em></h1>
+            <p>3D models, scripts, and shaders.</p>
+        </div>
+
+        <div class="shop-tools">
+            <div class="shop-search">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+                <input id="shop-search" type="search" placeholder="Search the shop" aria-label="Search the shop" autocomplete="off">
+            </div>
+            <div id="chips" class="chips" role="group" aria-label="Filter by category"></div>
+            <p id="result-count" class="result-count" aria-live="polite"></p>
+        </div>
+
+        <ul id="product-grid" class="product-grid" aria-label="Products"></ul>
+    </main>
+
+    <dialog id="product-modal" class="product-modal" aria-labelledby="modal-title">
+        <button type="button" class="modal-close shape-btn" aria-label="Close">&times;</button>
+        <div id="modal-body"></div>
+    </dialog>
+
+    <footer class="site-footer wrap">
+        <a class="logo" href="../">JAX<span>DEV</span></a>
+        <p>Please do not resell or reupload my assets<br>&copy; <span class="year"></span> Jax Dev.</p>
+        <img class="powered-by-stripe" src="../Assets/Stripe/Powered by Stripe - black.svg" alt="Powered by Stripe" width="150" height="34">
+        <div class="socials">
+            <a href="https://github.com/jaxdevs">GitHub</a>
+            <a href="https://youtube.com/@notjaxdev">YouTube</a>
+            <a href="https://discord.gg/5qxVttwgay">Discord</a>
+        </div>
+    </footer>
+
+    <script src="products.js"></script>
+    <script src="shop.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>
