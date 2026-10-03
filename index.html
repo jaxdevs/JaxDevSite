@@ -37,32 +37,54 @@
                     <img src="Assets/JaxTitleIcon.png" alt="Jax" width="1920" height="1080">
                 </h1>
                 <div class="hero-actions">
-                    <a class="button cream" href="shop/">Check my shop <span>&rarr;</span></a>
+                    <a class="button cream" href="shop/">Check my shop</a>
                     <a class="button pink" href="support">Need support?</a>
                 </div>
             </section>
 
-            <section class="featured-section">
+            <section class="peeks-section" id="sneak-peeks">
                 <div class="wrap">
                     <div class="section-heading">
                         <div>
-                            <p class="eyebrow">My stuff</p>
-                            <h2>Games I&rsquo;ve been<br>working on.</h2>
+                            <p class="eyebrow">Sneak peeks</p>
+                            <h2>Stuff I&rsquo;ve been<br>working on.</h2>
                         </div>
+                        <p class="intro">I dont got a name for the game yet but yea its gonna be good. Its like a physics game mixed with open world and possible story mode, just anything I think is cool.</p>
                     </div>
-                    <div class="game-grid">
-                        <article class="game-card game-card-large">
-                            <div class="game-image">
-                                <img src="Assets/BroDude.png" alt="Low-poly character from the game">
-                            </div>
-                            <div class="game-meta">
-                                <div>
-                                    <h3>I dont got a name yet but yea its gonna be good</h3>
-                                    <p>Its like a physics game mixed with open world and possible story mode, just anything I think is cool.</p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                    <!-- To add a sneak peek: copy one <li> block, then change the image path (twice),
+                         the caption (twice) and the alt text. Newest first looks best. -->
+                    <ul class="peek-grid">
+                        <li>
+                            <a class="peek" href="Assets/BroDude.png" data-lightbox data-caption="The main guy">
+                                <img src="Assets/BroDude.png" alt="Low-poly bearded character waving" loading="lazy">
+                                <span class="peek-caption">The main guy</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="peek" href="Assets/PointingUpwards.png" data-lightbox data-caption="Hoodie dude">
+                                <img src="Assets/PointingUpwards.png" alt="Character in a teal hoodie doing peace signs" loading="lazy">
+                                <span class="peek-caption">Hoodie dude</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="peek" href="Assets/HeMan.png" data-lightbox data-caption="Sword guy">
+                                <img src="Assets/HeMan.png" alt="Low-poly character holding a big sword" loading="lazy">
+                                <span class="peek-caption">Sword guy</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="peek" href="Assets/PLEASETRISTER.png" data-lightbox data-caption="Face test">
+                                <img src="Assets/PLEASETRISTER.png" alt="Close-up of the hoodie character's face" loading="lazy">
+                                <span class="peek-caption">Face test</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="peek" href="Assets/Favicon.png" data-lightbox data-caption="First doodle">
+                                <img src="Assets/Favicon.png" alt="Hand-drawn doodle" loading="lazy">
+                                <span class="peek-caption">First doodle</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </section>
 
@@ -91,6 +113,14 @@
                 <a href="https://discord.gg/5qxVttwgay">Discord</a>
             </div>
         </footer>
+
+        <dialog class="lightbox" id="lightbox" aria-label="Sneak peek">
+            <button class="lightbox-close shape-btn" type="button" aria-label="Close">&times;</button>
+            <div class="lightbox-inner">
+                <img alt="">
+                <p class="lightbox-caption"></p>
+            </div>
+        </dialog>
 
         <script src="script.js"></script>
     </body>

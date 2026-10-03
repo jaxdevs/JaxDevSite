@@ -6,7 +6,7 @@
 /* ---------- Shop page layout ---------- */
 
 .shop-page {
-    padding: 60px 0 105px;
+    padding: 60px 0 calc(60px + var(--wave-h));
 }
 
 .shop-tools {
@@ -283,13 +283,6 @@
     backdrop-filter: blur(3px);
 }
 
-@keyframes pop-in {
-    from {
-        opacity: 0;
-        transform: translateY(14px) scale(.97);
-    }
-}
-
 .modal-close {
     position: absolute;
     top: 14px;
@@ -472,7 +465,7 @@
     min-height: 70vh;
     display: grid;
     place-items: center;
-    padding: 60px 0 100px;
+    padding: 60px 0 calc(60px + var(--wave-h));
     position: relative;
     overflow: hidden;
 }

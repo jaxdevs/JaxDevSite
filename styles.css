@@ -17,28 +17,34 @@
 }
 
 :root {
-    /* colors - navy + lavender taken from HomePageHeaderImage.jpg */
+    /* colors - bright and friendly, like the JAXDEV logo:
+       white + lavender letters with a chunky navy outline */
     --ink: #161328;
-    --ink-2: #2a2445;
     --ink-soft: #4f4866;
     --muted: #6d6588;
-    --paper: #fdf7fe;
-    --cream: #f6e6fa;
+    --paper: #fffaff;
     --white: #fff;
     --accent: #dd91eb;
-    --pink: #ecbcf5;
     --accent-dark: #b862c9;
+    --pink: #ecbcf5;
+    --lav-1: #fbf0fd;   /* palest lavender  */
+    --lav-2: #f3d7f9;   /* soft lavender    */
+    --lav-3: #e9b4f2;   /* medium lavender  */
+    --cream: var(--lav-1);
     --lilac: #9a6bb0;
     --line: #f0d8f6;
-    --on-dark: #fff;
-    --on-dark-soft: #c9bddb;
     --yellow: #ffe490;
     --blue: #9ac5ff;
     --green: #a7e0a0;
     --red: #ff7e8e;
     --card-bg: #f7f7f7;
 
-    /* wavy edge, same feel as the blob in the header picture */
+    /* chunky navy outline, same as the logo */
+    --outline: -2px -2px 0 var(--ink), 2px -2px 0 var(--ink), -2px 2px 0 var(--ink), 2px 2px 0 var(--ink),
+               0 -2px 0 var(--ink), 0 2px 0 var(--ink), -2px 0 0 var(--ink), 2px 0 0 var(--ink);
+    --outline-drop: var(--outline), 4px 5px 0 var(--ink);
+
+    /* wavy divider, same feel as the blob in the header picture */
     --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 100' preserveAspectRatio='none'%3E%3Cpath d='M0 60C220 0 420 -5 640 40S1080 110 1440 30V100H0Z'/%3E%3C/svg%3E");
     --wave-h: 90px;
 
@@ -69,6 +75,7 @@
 html {
     scroll-behavior: smooth;
     background: var(--paper);
+    overflow-x: clip;   /* full-width decorations never cause sideways scrolling */
 }
 
 body {
@@ -76,7 +83,12 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: var(--paper);
+    /* soft lavender band with a wavy bottom behind the top of every page
+       (the home page hero covers it) */
+    background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 360' preserveAspectRatio='none'%3E%3Cpath fill='%23f3d7f9' d='M0 0H1440V300C1080 380 900 230 640 290S220 330 0 280Z'/%3E%3C/svg%3E")
+            top center / 100% 360px no-repeat,
+        var(--paper);
     color: var(--ink);
     font: 600 16px/1.5 var(--display);
 }
@@ -104,7 +116,13 @@ h3 {
     font-weight: 400;
     line-height: 1.16;
     letter-spacing: .5px;
-    text-shadow: 3px 3px 0 var(--line);
+}
+
+/* Big headings look like the logo: white letters, navy outline */
+h1,
+h2 {
+    color: var(--white);
+    text-shadow: var(--outline-drop);
 }
 
 h1 {
@@ -183,31 +201,22 @@ em,
 
 /* ---------- 4. Header + footer ---------- */
 
-/* Both are navy bands that stretch edge to edge
-   (the box-shadow + clip-path trick paints the color past the .wrap width) */
-.site-header,
-.site-footer {
-    background: var(--ink);
-    box-shadow: 0 0 0 100vmax var(--ink);
-    clip-path: inset(0 -100vmax);
-    color: var(--on-dark);
-}
-
 .site-header {
     height: var(--header-h);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    width: min(1200px, calc(100% - 48px));
+    width: min(1120px, calc(100% - 48px));
     margin-inline: auto;
 }
 
 .logo {
     font: 400 25px var(--pixel);
     letter-spacing: 1px;
-    color: var(--on-dark);
+    color: var(--white);
     text-decoration: none;
+    text-shadow: var(--outline), 3px 3px 0 var(--ink);
 }
 
 .logo span {
@@ -223,42 +232,71 @@ em,
 .header-cta {
     font: 400 11px var(--pixel);
     letter-spacing: .4px;
-    color: var(--on-dark);
+    color: var(--ink);
     text-decoration: none;
 }
 
 .site-header nav a {
-    opacity: .7;
-    transition: opacity .15s, color .15s;
+    padding: 7px 11px;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    transition: background .15s, border-color .15s;
 }
 
-.site-header nav a:hover,
+.site-header nav a:hover {
+    background: var(--white);
+    border-color: var(--ink);
+}
+
 .site-header nav a[aria-current="page"] {
-    color: var(--accent);
-    opacity: 1;
+    background: var(--accent);
+    border-color: var(--ink);
+    box-shadow: 2px 2px 0 var(--ink);
 }
 
 .header-cta {
-    border-bottom: 2px solid currentColor;
-    padding-bottom: 3px;
+    padding: 8px 12px;
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    box-shadow: 2px 2px 0 var(--ink);
+    transition: transform .15s, box-shadow .15s;
 }
 
 .header-cta:hover {
-    color: var(--accent);
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 var(--ink);
 }
 
+/* Lavender footer with a wavy top edge that blends into whatever is above it.
+   The box-shadow + clip-path trick paints the color edge to edge past the .wrap width. */
 .site-footer {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px 24px;
     flex-wrap: wrap;
-    padding: 34px 0 38px;
+    padding: 26px 0 36px;
+    /* paints the lavender past the .wrap edges, all the way across the screen */
+    border-image: linear-gradient(var(--accent), var(--accent)) fill 0 / 0 / 0 100vmax;
+}
+
+.site-footer::before {
+    content: "";
+    position: absolute;
+    bottom: calc(100% - 2px);
+    left: calc(50% - 50vw);
+    width: 100vw;
+    height: var(--wave-h);
+    background: var(--accent);
+    -webkit-mask: var(--wave) center / 100% 100% no-repeat;
+    mask: var(--wave) center / 100% 100% no-repeat;
 }
 
 .site-footer p {
     font: 400 10px/1.6 var(--pixel);
-    color: var(--on-dark-soft);
+    color: var(--ink);
     margin: 0;
 }
 
@@ -270,11 +308,11 @@ em,
 
 .socials a {
     font: 400 11px var(--pixel);
-    color: var(--on-dark);
+    color: var(--ink);
 }
 
 .socials a:hover {
-    color: var(--accent);
+    color: var(--white);
 }
 
 
@@ -372,19 +410,18 @@ em,
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* the character is on the left of the picture, so push the logo into the space on the right */
-    padding: var(--header-h) 24px 120px clamp(24px, 30vw, 560px);
-    background: var(--ink) url("Assets/HomePageHeaderImage.jpg") left center / cover no-repeat;
+    padding: var(--header-h) 24px 120px;
+    background: var(--lav-1) url("Assets/HomePageHeaderImage.jpg") left center / cover no-repeat;
 }
 
-/* Wavy navy edge where the picture meets the games section */
+/* Wavy edge where the picture blends into the games section */
 .hero::after {
     content: "";
     position: absolute;
     inset: auto 0 -1px;
     height: var(--wave-h);
     z-index: -1;
-    background: var(--ink);
+    background: var(--lav-1);
     -webkit-mask: var(--wave) center / 100% 100% no-repeat;
     mask: var(--wave) center / 100% 100% no-repeat;
 }
@@ -396,10 +433,22 @@ em,
 }
 
 .hero-title img {
-    width: min(700px, 60vw);
+    width: min(620px, 46vw);
     height: auto;
-    filter: drop-shadow(6px 8px 0 rgba(23, 20, 40, .45));
+    filter: drop-shadow(6px 8px 0 var(--lav-3));
     animation: wobble 3.2s ease-in-out infinite;
+}
+
+/* The logo is always centered. Below 1300px there isn't room beside the character,
+   so the picture slides left (the character moves partly off screen) to keep his face clear. */
+@media (max-width: 1300px) {
+    .hero {
+        background-position: 72% center;
+    }
+
+    .hero-title img {
+        width: min(560px, 80vw);
+    }
 }
 
 @keyframes wobble {
@@ -421,137 +470,177 @@ em,
     left: 0;
     right: 0;
     z-index: 10;
-    background: none;
-    box-shadow: none;
-    clip-path: none;
-}
-
-.on-hero .logo,
-.on-hero nav a,
-.on-hero .header-cta {
-    text-shadow: 2px 2px 0 var(--ink);
 }
 
 .on-hero nav a {
-    opacity: .85;
+    color: var(--white);
+    text-shadow: 2px 2px 0 var(--ink);
 }
 
-/* Featured games - navy section */
-.featured-section {
-    background: var(--ink);
-    color: var(--on-dark);
-    padding: 60px 0 calc(110px + var(--wave-h));
+.on-hero nav a:hover {
+    color: var(--ink);
+    text-shadow: none;
 }
 
-.featured-section .eyebrow {
-    color: var(--accent);
+.on-hero nav a[aria-current="page"] {
+    color: var(--ink);
+    text-shadow: none;
 }
 
-.featured-section h2,
-.featured-section h3 {
-    color: var(--on-dark);
-    text-shadow: 3px 3px 0 var(--ink-2);
+/* Sneak peeks - row of tilted photo cards, click one to see it big */
+.peeks-section {
+    background: var(--lav-1);
+    padding: 50px 0 calc(100px + var(--wave-h));
 }
 
 .section-heading {
     display: flex;
     justify-content: space-between;
     align-items: end;
-    gap: 22px;
-    margin-bottom: 35px;
+    gap: 22px 40px;
+    margin-bottom: 40px;
 }
 
 .section-heading h2 {
     margin-bottom: 0;
 }
 
-.game-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-}
-
-.game-card {
-    color: inherit;
-    text-decoration: none;
-}
-
-.game-card-large {
-    grid-column: 1 / -1;
-}
-
-.game-image {
-    height: 290px;
-    overflow: hidden;
-    background: var(--accent);
-    border: 3px solid var(--accent);
-    border-radius: var(--radius);
-    box-shadow: 8px 8px 0 var(--ink-2);
-}
-
-.game-card-large .game-image {
-    height: 420px;
-}
-
-.game-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform .5s;
-}
-
-.game-card:hover .game-image img {
-    transform: scale(1.04);
-}
-
-.game-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    gap: 16px;
-    padding: 26px 0 0;
-}
-
-.game-meta h3 {
-    text-shadow: none;
-}
-
-.game-meta p {
-    max-width: 640px;
+.section-heading .intro {
+    max-width: 420px;
     margin: 0;
-    line-height: 1.55;
-    color: var(--on-dark-soft);
+    font-size: 15px;
 }
 
-/* "Now" section - lavender, with wavy edges top and bottom */
+.peek-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 22px;
+}
+
+.peek {
+    --tilt: 0deg;
+    position: relative;
+    display: block;
+    padding: 10px 10px 0;
+    color: var(--ink);
+    text-decoration: none;
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transform: rotate(var(--tilt));
+    transition: transform .2s, box-shadow .2s;
+}
+
+/* each card leans a little differently, like photos dropped on a table */
+.peek-grid li:nth-child(5n + 1) .peek { --tilt: -2.5deg; }
+.peek-grid li:nth-child(5n + 2) .peek { --tilt: 1.5deg; }
+.peek-grid li:nth-child(5n + 3) .peek { --tilt: -1deg; }
+.peek-grid li:nth-child(5n + 4) .peek { --tilt: 2deg; }
+.peek-grid li:nth-child(5n + 5) .peek { --tilt: -1.5deg; }
+
+.peek:hover,
+.peek:focus-visible {
+    z-index: 1;
+    transform: translateY(-6px) rotate(0) scale(1.04);
+    box-shadow: 9px 10px 0 var(--ink);
+}
+
+.peek img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: var(--lav-2);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+}
+
+.peek-caption {
+    display: block;
+    padding: 11px 4px 13px;
+    font: 400 11px var(--pixel);
+    letter-spacing: .4px;
+    text-align: center;
+}
+
+/* Full-size viewer that opens when a peek is clicked */
+.lightbox {
+    width: min(1000px, calc(100% - 28px));
+    padding: 0;
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius-lg);
+    box-shadow: 9px 9px 0 var(--ink);
+    overflow: visible;
+}
+
+.lightbox[open] {
+    animation: pop-in .22s cubic-bezier(.2, 1.3, .4, 1);
+}
+
+.lightbox::backdrop {
+    background: rgba(22, 19, 40, .55);
+    backdrop-filter: blur(3px);
+}
+
+.lightbox-inner {
+    padding: 14px 14px 4px;
+}
+
+.lightbox img {
+    width: 100%;
+    max-height: calc(100dvh - 150px);
+    object-fit: contain;
+    background: var(--lav-1);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+}
+
+.lightbox-caption {
+    margin: 0;
+    padding: 14px 0 12px;
+    font: 400 13px var(--pixel);
+    text-align: center;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    font: 400 18px var(--pixel);
+}
+
+@keyframes pop-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(.97);
+    }
+}
+
+/* "Now" section - soft lavender, wave on top blends it into the games section */
 .now-section {
     position: relative;
-    background: var(--accent);
-    padding: 70px 0 calc(70px + var(--wave-h));
+    background: var(--lav-2);
+    padding: 50px 0 calc(80px + var(--wave-h));
 }
 
-.now-section::before,
-.now-section::after {
+.now-section::before {
     content: "";
     position: absolute;
     left: 0;
     right: 0;
+    bottom: calc(100% - 3px);
     height: var(--wave-h);
+    background: var(--lav-2);
+    transform: scaleX(-1);
     -webkit-mask: var(--wave) center / 100% 100% no-repeat;
     mask: var(--wave) center / 100% 100% no-repeat;
-}
-
-/* lavender wave rising out of the navy section above */
-.now-section::before {
-    bottom: calc(100% - 3px);
-    background: var(--accent);
-}
-
-/* navy wave leading into the footer, flipped so it curves the other way */
-.now-section::after {
-    bottom: -1px;
-    background: var(--ink);
-    transform: scaleX(-1);
 }
 
 .now-inner {
@@ -561,20 +650,11 @@ em,
     gap: 60px;
 }
 
-.now-card .eyebrow {
-    color: var(--ink);
-    opacity: .7;
-}
-
-.now-card h2 {
-    text-shadow: 3px 3px 0 var(--pink);
-}
-
 .now-card p:not(.eyebrow) {
     max-width: 440px;
     margin: 0 0 25px;
     line-height: 1.55;
-    color: var(--ink);
+    color: var(--ink-soft);
 }
 
 .photo-stack {
@@ -659,7 +739,7 @@ em,
 
 .contact-card {
     padding: 40px;
-    background: var(--cream);
+    background: var(--white);
     border: 3px solid var(--ink);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
@@ -683,7 +763,7 @@ em,
     padding: 15px 18px;
     font: 600 15px var(--display);
     color: var(--ink);
-    background: var(--white);
+    background: var(--lav-1);
     border: 2px solid var(--ink);
     border-radius: 10px;
     transition: border-color .2s, box-shadow .2s;
@@ -727,7 +807,7 @@ em,
 
 /* Music */
 .music-page {
-    padding: 50px 0 80px;
+    padding: 50px 0 calc(50px + var(--wave-h));
 }
 
 .music-player {
@@ -756,6 +836,10 @@ em,
 /* ---------- 8. Responsive ---------- */
 
 @media (max-width: 900px) {
+    .peek-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 50px;
@@ -786,7 +870,8 @@ em,
     .site-header nav {
         order: 3;
         width: 100%;
-        gap: 22px;
+        gap: 6px;
+        margin-left: -11px;
     }
 
     .header-cta {
@@ -819,13 +904,25 @@ em,
         align-items: start;
     }
 
-    .game-card-large .game-image,
-    .game-image {
-        height: 290px;
+    /* on phones the peeks become a swipeable row */
+    .peek-grid {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: 64%;
+        gap: 18px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        margin-inline: -18px;
+        padding: 12px 18px 22px;
+        scroll-padding-inline: 18px;
+    }
+
+    .peek-grid li {
+        scroll-snap-align: start;
     }
 
     .now-section {
-        padding: 50px 0 calc(60px + var(--wave-h));
+        padding: 30px 0 calc(60px + var(--wave-h));
     }
 
     .photo-stack {
@@ -855,13 +952,6 @@ em,
     .error-number {
         right: 0;
         bottom: -25px;
-    }
-}
-
-@media (max-width: 420px) {
-    .game-card-large .game-image,
-    .game-image {
-        height: 230px;
     }
 }
 
