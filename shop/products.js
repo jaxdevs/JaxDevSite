@@ -23,6 +23,7 @@ window.PRODUCTS = [
     },
     {
         slug: "sample-model-pack",
+        featured: true,   // shows big at the top of the shop (only one product should have this)
         title: "Sample Model Pack",
         blurb: "A paid 3D model bundle. Swap in your own details.",
         description: [

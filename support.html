@@ -3,10 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="color-scheme" content="light">
         <title>JaxDev | Support</title>
         <meta name="description" content="Need support? Contact me.">
         <link rel="canonical" href="https://jaxdev.dev/support">
         <link rel="icon" type="image/png" href="Assets/JaxIcon.png">
+        <link rel="apple-touch-icon" href="Assets/JaxIcon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap">
         <link rel="stylesheet" href="styles.css">
 
         <meta property="og:type" content="website">
@@ -16,7 +21,7 @@
         <meta property="og:url" content="https://jaxdev.dev/support">
         <meta property="og:image" content="https://jaxdev.dev/Assets/EmbedImageV1.png">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="theme-color" content="#c966d7">
+        <meta name="theme-color" content="#dd91eb">
     </head>
     <body>
         <a class="skip-link" href="#main">Skip to content</a>
@@ -32,60 +37,184 @@
         </header>
 
         <main id="main" class="contact-page">
-            <div class="wrap contact-grid">
-                <div class="contact-info">
+            <div class="wrap">
+                <div class="contact-head">
                     <p class="eyebrow">Get in touch</p>
-                    <h1>Contact me</h1>
-                    <div class="contact-list">
-                        <div class="contact-item">
-                            <h3>Business</h3>
-                            <p>Partnerships, commissions and collaborations.</p>
-                        </div>
-                        <div class="contact-item">
-                            <h3>Support</h3>
-                            <p>Bug reports, account issues and game assistance.</p>
-                        </div>
-                        <div class="contact-item">
-                            <h3>Response time</h3>
-                            <p>Im gonna be honest im 1 dude and yea dont expect a really fast response.</p>
-                        </div>
-                    </div>
-                    <div class="contact-note">Please don't abuse this</div>
+                    <h1>Contact <em>me</em></h1>
+                    <p class="intro">Bug, business, or just wanna say hi? Pick what it&rsquo;s about and send it over.</p>
                 </div>
 
-                <div class="contact-card">
-                    <form action="https://formsubmit.co/jaxdev.business@gmail.com" method="POST">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_subject" value="New Contact Form Message">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input id="name" type="text" name="name" placeholder="Your name" autocomplete="name" required>
+                <div class="contact-grid">
+                    <!-- The message window -->
+                    <div class="message-window">
+                        <div class="window-bar">
+                            <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                            <span class="window-title">New message</span>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+
+                        <!-- FormSubmit sends this to your email. To hide your address from spam bots,
+                             swap the email in "action" for the random code FormSubmit gives you
+                             (FormSubmit emails it to you the first time a message is sent). -->
+                        <form id="contact-form" class="contact-form" action="https://formsubmit.co/jaxdev.business@gmail.com" method="POST">
+                            <input type="hidden" name="_subject" value="New message from jaxdev.dev">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_next" value="https://jaxdev.dev/support?sent=1">
+                            <!-- bot trap: people never see this box, bots fill it in and get ignored -->
+                            <input class="honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+                            <fieldset class="topic-picker">
+                                <legend>What&rsquo;s it about?</legend>
+                                <div class="topic-options">
+                                    <input type="radio" id="topic-business" name="topic" value="Business" required>
+                                    <label for="topic-business" data-hint="Partnerships, commissions and collaborations.">Business</label>
+
+                                    <input type="radio" id="topic-support" name="topic" value="Support">
+                                    <label for="topic-support" data-hint="Account issues and help with my games.">Support</label>
+
+                                    <input type="radio" id="topic-bug" name="topic" value="Bug report">
+                                    <label for="topic-bug" data-hint="Tell me what broke, where, and how to make it happen again.">Bug report</label>
+
+                                    <input type="radio" id="topic-hi" name="topic" value="Just saying hi">
+                                    <label for="topic-hi" data-hint="Ideas, feedback, or just saying hi. All good.">Just saying hi</label>
+                                </div>
+                                <p class="topic-hint" id="topic-hint">Pick one so I know where to look first.</p>
+                            </fieldset>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input id="name" type="text" name="name" placeholder="Your name" autocomplete="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input id="subject" type="text" name="subject" placeholder="What's this about?" maxlength="120" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message <span class="char-count" id="char-count">0 / 2000</span></label>
+                                <textarea id="message" name="message" placeholder="Write your message..." maxlength="2000" required></textarea>
+                            </div>
+
+                            <div class="form-foot">
+                                <button class="button primary" type="submit">Send message <span>&rarr;</span></button>
+                                <p class="fine-print">Please don&rsquo;t abuse this</p>
+                            </div>
+                            <p class="form-status" id="form-status" role="alert"></p>
+                        </form>
+
+                        <!-- Shown after the message goes through -->
+                        <div class="form-sent" id="form-sent" hidden>
+                            <div class="sent-badge" aria-hidden="true">&#10003;</div>
+                            <h2>Sent!</h2>
+                            <p id="sent-text">Thanks! I&rsquo;ll get back to you by email when I can.</p>
+                            <button class="button" type="button" id="send-another">Send another</button>
                         </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input id="subject" type="text" name="subject" placeholder="What's this about?" required>
+                    </div>
+
+                    <!-- Side: mascot + Discord -->
+                    <aside class="contact-side">
+                        <div class="mascot-card">
+                            <p class="speech">Im gonna be honest im 1 dude and yea dont expect a really fast response.</p>
+                            <img src="Assets/ContactMascot.png" alt="Hoodie character doing peace signs" width="278" height="440">
                         </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" placeholder="Write your message..." required></textarea>
+                        <!-- live numbers come from script.js -->
+                        <div class="discord-card" id="discord-card" data-invite="5qxVttwgay">
+                            <div class="discord-head">
+                                <span class="discord-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2.1a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4a12.9 12.9 0 0 1-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.7-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></span>
+                                <div>
+                                    <p class="eyebrow">Need it faster?</p>
+                                    <h3 class="discord-name">jax&rsquo;s Fortress</h3>
+                                </div>
+                            </div>
+                            <p class="discord-stats" hidden>
+                                <span class="online-dot" aria-hidden="true"></span>
+                                <span><b class="discord-online"></b> online</span>
+                                <span class="stat-sep" aria-hidden="true">&middot;</span>
+                                <span><b class="discord-members"></b> members</span>
+                            </p>
+                            <p class="discord-blurb">I&rsquo;m usually quicker on Discord. Come say hi there.</p>
+                            <a class="button primary" href="https://discord.gg/5qxVttwgay">Join the server</a>
                         </div>
-                        <button class="button primary" type="submit">Send message <span>&rarr;</span></button>
-                    </form>
+                    </aside>
                 </div>
             </div>
+
+            <section class="help-section wave-top">
+                <div class="wrap help-layout">
+                    <div>
+                        <div class="section-heading">
+                            <div>
+                                <p class="eyebrow">Before you message</p>
+                                <h2>Quick answers.</h2>
+                            </div>
+                        </div>
+                        <div class="faq">
+                        <details class="faq-item">
+                            <summary>How fast will you reply?</summary>
+                            <p>Honestly it depends, I&rsquo;m one dude. If it&rsquo;s urgent, Discord is usually faster.</p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Reporting a bug?</summary>
+                            <p>Tell me what you were doing, what happened, and what you expected to happen. A screenshot or a video link helps a ton.</p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Bought something and the download broke?</summary>
+                            <p>Pick <b>Support</b> above and include the email you paid with. I&rsquo;ll fix it.</p>
+                        </details>
+                        <details class="faq-item">
+                            <summary>Want something custom made?</summary>
+                            <p>Pick <b>Business</b> and tell me what you&rsquo;re after: what it is, roughly when you need it, and your budget.</p>
+                        </details>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="section-heading">
+                            <div>
+                                <p class="eyebrow">Elsewhere</p>
+                                <h2>Find me.</h2>
+                            </div>
+                        </div>
+                        <div class="elsewhere">
+                            <a class="elsewhere-card" href="https://youtube.com/@notjaxdev">
+                                <span class="discord-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg></span>
+                                <span><b>YouTube</b><small>Videos of what I&rsquo;m making</small></span>
+                            </a>
+                            <a class="elsewhere-card" href="https://discord.gg/5qxVttwgay">
+                                <span class="discord-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2.1a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4a12.9 12.9 0 0 1-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.7-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></span>
+                                <span><b>Discord</b><small>Sneak peeks drop here first</small></span>
+                            </a>
+                            <a class="elsewhere-card" href="https://github.com/jaxdevs">
+                                <span class="discord-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg></span>
+                                <span><b>GitHub</b><small>Some free code, projects and other public repositories</small></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <footer class="site-footer wrap">
-            <a class="logo" href="./">JAX<span>DEV</span></a>
-            <p>Hi!<br>&copy; <span class="year"></span> Jax Dev.</p>
+            <div class="footer-brand">
+                <a class="logo" href="./">JAX<span>DEV</span></a>
+                <p>Hi!</p>
+            </div>
+            <nav class="footer-links" aria-label="Footer">
+                <a href="./">Home</a>
+                <a href="shop/">Shop</a>
+                <a href="support">Support</a>
+            </nav>
             <div class="socials">
-                <a href="https://github.com/jaxdevs">GitHub</a>
-                <a href="https://youtube.com/@notjaxdev">YouTube</a>
-                <a href="https://discord.gg/5qxVttwgay">Discord</a>
+                <a href="https://github.com/jaxdevs" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg></a>
+                <a href="https://youtube.com/@notjaxdev" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg></a>
+                <a href="https://discord.gg/5qxVttwgay" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2.1a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4a12.9 12.9 0 0 1-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.7-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; <span class="year"></span> Jax Dev. Mike Ox Long helped with the creation of this site</p>
             </div>
         </footer>
 

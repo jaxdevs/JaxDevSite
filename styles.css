@@ -11,7 +11,7 @@
 @font-face {
     font-family: "SuperMarioDisplay";
     src: url("Assets/Fonts/SuperMarioDisplay.ttf") format("truetype");
-    font-weight: 100;
+    font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
@@ -37,7 +37,10 @@
     --blue: #9ac5ff;
     --green: #a7e0a0;
     --red: #ff7e8e;
+    --online: #4cc26b;   /* Discord 'online' dot */
     --card-bg: #f7f7f7;
+    --blurple: #5865f2;   /* Discord */
+    --yt-red: #ff0033;    /* YouTube */
 
     /* chunky navy outline, same as the logo */
     --outline: -2px -2px 0 var(--ink), 2px -2px 0 var(--ink), -2px 2px 0 var(--ink), 2px 2px 0 var(--ink),
@@ -50,7 +53,7 @@
 
     /* fonts */
     --pixel: "SuperMario256", monospace;
-    --display: "SuperMarioDisplay", monospace;
+    --display: "SuperMarioDisplay", monospace;   /* body text (loaded from Google Fonts in each page) */
 
     /* shape */
     --radius: 14px;
@@ -74,6 +77,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h);
     background: var(--paper);
     overflow-x: clip;   /* full-width decorations never cause sideways scrolling */
 }
@@ -95,6 +99,11 @@ body {
 
 main {
     flex: 1;
+}
+
+/* anything marked hidden stays hidden, even if its class gives it a display style */
+[hidden] {
+    display: none !important;
 }
 
 img {
@@ -201,14 +210,27 @@ em,
 
 /* ---------- 4. Header + footer ---------- */
 
+/* Floating header: pinned to the top, with a soft fade behind it so it stays
+   readable over whatever scrolls underneath. The side padding keeps its contents
+   lined up with the 1120px .wrap column. */
 .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
     height: var(--header-h);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    width: min(1120px, calc(100% - 48px));
-    margin-inline: auto;
+    padding-inline: max(24px, calc((100% - 1120px) / 2));
+    background: linear-gradient(to bottom, rgba(255, 250, 255, .96) 0%, rgba(255, 250, 255, .85) 60%, rgba(255, 250, 255, 0) 100%);
+}
+
+/* every page except home starts below the header (home's hero sits under it on purpose) */
+.site-header:not(.on-hero) ~ main {
+    margin-top: var(--header-h);
 }
 
 .logo {
@@ -259,25 +281,29 @@ em,
     background: var(--white);
     border: 2px solid var(--ink);
     border-radius: 10px;
-    box-shadow: 2px 2px 0 var(--ink);
-    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 3px 0 var(--lav-3), 0 3px 0 2px var(--ink);
+    transition: transform .12s, box-shadow .12s;
 }
 
 .header-cta:hover {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0 var(--ink);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 0 var(--lav-3), 0 4px 0 2px var(--ink);
+}
+
+.header-cta:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--lav-3), 0 1px 0 2px var(--ink);
 }
 
 /* Lavender footer with a wavy top edge that blends into whatever is above it.
    The box-shadow + clip-path trick paints the color edge to edge past the .wrap width. */
 .site-footer {
     position: relative;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
     align-items: center;
-    gap: 16px 24px;
-    flex-wrap: wrap;
-    padding: 26px 0 36px;
+    gap: 22px 44px;
+    padding: 26px 0 28px;
     /* paints the lavender past the .wrap edges, all the way across the screen */
     border-image: linear-gradient(var(--accent), var(--accent)) fill 0 / 0 / 0 100vmax;
 }
@@ -294,35 +320,91 @@ em,
     mask: var(--wave) center / 100% 100% no-repeat;
 }
 
-.site-footer p {
-    font: 400 10px/1.6 var(--pixel);
-    color: var(--ink);
-    margin: 0;
+.footer-brand {
+    display: grid;
+    gap: 8px;
 }
 
+.footer-brand p,
+.footer-copy p {
+    margin: 0;
+    font: 400 10px/1.6 var(--pixel);
+    color: var(--ink);
+}
+
+.footer-links {
+    display: flex;
+    gap: 22px;
+}
+
+.footer-links a {
+    font: 400 11px var(--pixel);
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* little chunky icon buttons */
 .socials {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    gap: 10px;
 }
 
 .socials a {
-    font: 400 11px var(--pixel);
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
     color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 0 3px 0 var(--accent-dark), 0 3px 0 2px var(--ink);
+    transition: transform .12s, box-shadow .12s;
 }
 
 .socials a:hover {
-    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 var(--accent-dark), 0 5px 0 2px var(--ink);
+}
+
+.socials a:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--accent-dark), 0 1px 0 2px var(--ink);
+}
+
+.socials svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.footer-copy {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px 24px;
+    padding-top: 18px;
+    border-top: 2px dashed rgba(22, 19, 40, .3);
 }
 
 
 /* ---------- 5. Buttons ---------- */
 
+/* Chunky "game menu" buttons: a colored top sitting on a thicker base.
+   --btn-base is the base color; each button style below sets its own. */
 .button {
+    --btn-base: var(--lav-3);
     display: inline-flex;
     align-items: center;
     gap: 14px;
-    padding: 13px 17px;
+    padding: 13px 18px;
     font: 400 14px var(--pixel);
     letter-spacing: .4px;
     color: var(--ink);
@@ -330,14 +412,20 @@ em,
     background: var(--white);
     border: 2px solid var(--ink);
     border-radius: 12px;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 5px 0 var(--btn-base), 0 5px 0 2px var(--ink);
     cursor: pointer;
-    transition: transform .15s, box-shadow .15s;
+    transition: transform .12s, box-shadow .12s;
 }
 
 .button:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 1px 1px 0 var(--ink);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--btn-base), 0 7px 0 2px var(--ink);
+}
+
+/* pressed: the top squishes down into the base */
+.button:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 var(--btn-base), 0 1px 0 2px var(--ink);
 }
 
 .button span {
@@ -347,6 +435,7 @@ em,
 
 .button.primary,
 .button.pink {
+    --btn-base: var(--accent-dark);
     background: var(--accent);
 }
 
@@ -354,8 +443,42 @@ em,
     background: var(--white);
 }
 
+/* Social buttons use the site's own colors (lavender / white, navy text);
+   the logo picks up the brand color on hover */
+.button.youtube {
+    --btn-base: var(--accent-dark);
+    background: var(--accent);
+}
+
 .button.discord {
     background: var(--white);
+}
+
+.button.youtube,
+.button.discord {
+    gap: 10px;
+}
+
+.button.youtube:hover svg {
+    color: var(--yt-red);
+}
+
+.button.discord:hover svg {
+    color: var(--blurple);
+}
+
+.button svg {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    transition: color .15s;
+}
+
+.social-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
 }
 
 /* Octagon icon button, used for the little arrows */
@@ -463,34 +586,47 @@ em,
     gap: 16px;
 }
 
-/* Header sitting on top of the hero picture (home page only) */
-.site-header.on-hero {
+/* bouncing "scroll" arrow at the bottom of the hero */
+.scroll-hint {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-}
-
-.on-hero nav a {
-    color: var(--white);
-    text-shadow: 2px 2px 0 var(--ink);
-}
-
-.on-hero nav a:hover {
+    left: 50%;
+    bottom: calc(var(--wave-h) + 6px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font: 400 10px var(--pixel);
+    letter-spacing: 1px;
     color: var(--ink);
-    text-shadow: none;
+    text-decoration: none;
+    animation: hint-bob 1.6s ease-in-out infinite;
 }
 
-.on-hero nav a[aria-current="page"] {
-    color: var(--ink);
-    text-shadow: none;
+.scroll-hint svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@keyframes hint-bob {
+    0%, 100% { transform: translate(-50%, 0); }
+    50%      { transform: translate(-50%, 7px); }
+}
+
+@media (max-height: 640px) {
+    .scroll-hint {
+        display: none;
+    }
 }
 
 /* Sneak peeks - row of tilted photo cards, click one to see it big */
 .peeks-section {
     background: var(--lav-1);
-    padding: 50px 0 calc(100px + var(--wave-h));
+    padding: 50px 0 80px;
 }
 
 .section-heading {
@@ -623,7 +759,286 @@ em,
     }
 }
 
-/* "Now" section - soft lavender, wave on top blends it into the games section */
+/* Latest updates: devlog on the left, game progress + live Discord on the right */
+.updates-section {
+    background: var(--lav-1);
+    padding: 10px 0 calc(100px + var(--wave-h));
+}
+
+.updates-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 40px;
+    align-items: start;
+}
+
+/* devlog timeline */
+.log-list {
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 30px;
+    list-style: none;
+}
+
+.log-list::before {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 14px;
+    bottom: 14px;
+    border-left: 3px dashed var(--lav-3);
+}
+
+.log-entry {
+    position: relative;
+    margin-bottom: 22px;
+    padding: 20px 22px;
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.log-entry::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: 22px;
+    width: 18px;
+    height: 18px;
+    background: var(--accent);
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+}
+
+.log-entry.is-older {
+    display: none;
+}
+
+.log-entry time {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 4px 10px;
+    font: 400 10px var(--pixel);
+    letter-spacing: .5px;
+    background: var(--lav-2);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+}
+
+.log-entry h3 {
+    font-size: 19px;
+    margin-bottom: 8px;
+}
+
+.log-entry p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+}
+
+.log-entry img {
+    width: 100%;
+    max-height: 280px;
+    margin-top: 14px;
+    object-fit: cover;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+}
+
+.log-more {
+    margin-left: 30px;
+}
+
+/* side cards */
+.updates-side {
+    display: grid;
+    gap: 24px;
+}
+
+.progress-card,
+.discord-card {
+    padding: 22px 24px 24px;
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.progress-top .eyebrow,
+.discord-head .eyebrow {
+    margin: 0;
+}
+
+.status-pill {
+    padding: 4px 10px;
+    font: 400 9px var(--pixel);
+    letter-spacing: .5px;
+    background: var(--lav-2);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+}
+
+.progress-card h3 {
+    font-size: 22px;
+    margin-bottom: 6px;
+}
+
+.progress-blurb {
+    margin: 0 0 18px;
+    font-size: 14px;
+    color: var(--ink-soft);
+}
+
+/* chunky striped progress bar */
+.progress-bar {
+    height: 24px;
+    background: var(--lav-1);
+    border: 3px solid var(--ink);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar span {
+    display: block;
+    height: 100%;
+    background: repeating-linear-gradient(-45deg, var(--accent) 0 10px, var(--pink) 10px 20px);
+    background-size: 28px 28px;
+    border-right: 3px solid var(--ink);
+    animation: stripes 1.2s linear infinite;
+    transition: width .8s cubic-bezier(.2, .8, .3, 1);
+}
+
+@keyframes stripes {
+    to { background-position: 28px 0; }
+}
+
+.progress-label {
+    margin: 8px 0 14px;
+    font: 400 11px var(--pixel);
+}
+
+.progress-list {
+    display: grid;
+    gap: 9px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.progress-list li {
+    position: relative;
+    padding-left: 30px;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.progress-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    font: 400 11px/1 var(--pixel);
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.progress-list li.done::before {
+    content: "\2713";
+    background: var(--accent);
+}
+
+.progress-list li.doing::before {
+    background: linear-gradient(to top, var(--accent) 50%, var(--white) 50%);
+}
+
+.progress-list li.todo {
+    color: var(--ink-soft);
+}
+
+/* live Discord card */
+.discord-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.discord-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 46px;
+    height: 46px;
+    background: var(--lav-2);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+}
+
+.discord-icon svg {
+    width: 26px;
+    height: 26px;
+    fill: var(--ink);
+}
+
+.discord-name {
+    font-size: 18px;
+    margin: 2px 0 0;
+}
+
+.discord-stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    margin: 0 0 10px;
+    font-size: 15px;
+}
+
+.discord-stats b {
+    font: 400 15px var(--pixel);
+}
+
+.online-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--online);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    animation: online-pulse 2s ease-out infinite;
+}
+
+@keyframes online-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(76, 194, 107, .55); }
+    100% { box-shadow: 0 0 0 9px rgba(76, 194, 107, 0); }
+}
+
+.stat-sep {
+    color: var(--muted);
+}
+
+.discord-blurb {
+    margin: 0 0 18px;
+    font-size: 14px;
+    color: var(--ink-soft);
+}
+
+/* Team board - soft lavender, wave on top blends it into the section above */
 .now-section {
     position: relative;
     background: var(--lav-2);
@@ -643,142 +1058,533 @@ em,
     mask: var(--wave) center / 100% 100% no-repeat;
 }
 
-.now-inner {
+.team-cta {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 60px;
+    gap: 16px;
+    justify-items: start;
+    max-width: 460px;
 }
 
-.now-card p:not(.eyebrow) {
-    max-width: 440px;
-    margin: 0 0 25px;
-    line-height: 1.55;
+.team-cta .intro {
+    margin: 0;
+    font-size: 15px;
+}
+
+/* the board: staff cards pinned up at slightly different angles */
+.staff-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 34px 24px;
+    margin: 0;
+    padding: 16px 0 0;
+    list-style: none;
+}
+
+.staff-card {
+    --tilt: 0deg;
+    position: relative;
+    padding: 26px 20px 22px;
+    text-align: center;
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    transform: rotate(var(--tilt));
+    transition: transform .2s, box-shadow .2s;
+}
+
+.staff-card:nth-child(4n + 1) { --tilt: -1.5deg; }
+.staff-card:nth-child(4n + 2) { --tilt: 1.2deg; }
+.staff-card:nth-child(4n + 3) { --tilt: -.8deg; }
+.staff-card:nth-child(4n + 4) { --tilt: 1.6deg; }
+
+.staff-card:hover {
+    transform: rotate(0) translateY(-4px);
+    box-shadow: 8px 9px 0 var(--ink);
+}
+
+/* the pushpin holding each card up */
+.staff-card::before {
+    content: "";
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+    box-shadow: inset -3px -3px 0 var(--accent-dark), 2px 2px 0 var(--ink);
+    transform: translateX(-50%);
+}
+
+.staff-avatar {
+    display: grid;
+    place-items: center;
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 14px;
+    overflow: hidden;
+    background: var(--lav-2);
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+    box-shadow: 0 4px 0 var(--lav-3), 0 4px 0 3px var(--ink);
+}
+
+.staff-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: var(--white);
+}
+
+.staff-avatar span {
+    font: 400 34px var(--pixel);
+    color: var(--white);
+    text-shadow: var(--outline), 2px 3px 0 var(--ink);
+}
+
+.staff-card h3 {
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+
+.staff-card p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
     color: var(--ink-soft);
 }
 
-.photo-stack {
-    position: relative;
-    height: 355px;
+/* role badges, little tilted stickers like the ones on kelpvr.com */
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 12px;
 }
 
-.photo-stack img {
-    position: absolute;
-    width: 65%;
-    object-fit: cover;
-    border: 3px solid var(--ink);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+.badge {
+    display: inline-block;
+    padding: 4px 9px 5px;
+    font: 400 9px var(--pixel);
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+    box-shadow: 0 2px 0 var(--ink);
+    transform: rotate(-2deg);
 }
 
-.stack-back {
-    top: 0;
-    right: 0;
-    height: 75%;
-    transform: rotate(6deg);
+.badge:nth-child(even) {
+    transform: rotate(2deg);
 }
 
-.stack-front {
-    bottom: 0;
-    left: 0;
-    height: 79%;
-    transform: rotate(-4deg);
+.badge.owner  { background: var(--accent); }
+.badge.dev    { background: #ffb3c7; }
+.badge.mod    { background: var(--blue); }
+.badge.artist { background: #ffc9a3; }
+.badge.music  { background: var(--white); }
+.badge.tester { background: var(--yellow); }
+.badge.helper { background: var(--green); }
+
+/* the "more soon" placeholder */
+.staff-card.is-empty {
+    background: transparent;
+    border-style: dashed;
+    box-shadow: none;
+}
+
+.staff-card.is-empty::before {
+    background: var(--white);
+    box-shadow: 2px 2px 0 var(--ink);
+}
+
+.staff-card.is-empty .staff-avatar {
+    background: var(--white);
+    box-shadow: none;
 }
 
 
 /* ---------- 7. Support, 404, Music pages ---------- */
 
-/* Support */
+/* Support / contact page */
 .contact-page {
-    padding: 70px 0 100px;
+    padding: 40px 0 0;
+}
+
+.contact-head {
+    max-width: 640px;
+    margin: 0 auto 44px;
+    text-align: center;
+}
+
+.contact-head h1 {
+    margin-bottom: 14px;
+}
+
+.contact-head .intro {
+    margin: 0 auto;
 }
 
 .contact-grid {
     display: grid;
-    grid-template-columns: .9fr 1.1fr;
-    gap: 70px;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
     align-items: start;
 }
 
-.contact-list {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    margin-top: 10px;
-}
-
-.contact-item {
-    border-top: 2px solid var(--ink);
-    padding-top: 12px;
-}
-
-.contact-item h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
-    text-shadow: none;
-}
-
-.contact-item p {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--ink-soft);
-}
-
-.contact-note {
-    width: fit-content;
-    margin-top: 28px;
-    padding: 14px 16px;
-    font: 400 11px var(--pixel);
-    background: var(--pink);
-    border: 2px solid var(--ink);
-    border-radius: 9px;
-    box-shadow: var(--shadow-sm);
-    transform: rotate(-2deg);
-}
-
-.contact-card {
-    padding: 40px;
+/* the form looks like a little game window */
+.message-window {
     background: var(--white);
     border: 3px solid var(--ink);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
-    transform: rotate(-1deg);
+    overflow: hidden;
 }
 
-.form-group {
-    margin-bottom: 22px;
+.window-bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    background: var(--accent);
+    border-bottom: 3px solid var(--ink);
 }
 
+.window-dots {
+    display: flex;
+    gap: 7px;
+}
+
+.window-dots i {
+    width: 13px;
+    height: 13px;
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    background: var(--white);
+}
+
+.window-dots i:nth-child(2) { background: var(--lav-2); }
+.window-dots i:nth-child(3) { background: var(--lav-3); }
+
+.window-title {
+    font: 400 12px var(--pixel);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.contact-form {
+    padding: 28px 30px 30px;
+}
+
+.honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+/* "What's it about?" chips (radio buttons in disguise) */
+.topic-picker {
+    margin: 0 0 24px;
+    padding: 0;
+    border: 0;
+}
+
+.topic-picker legend,
 .form-group label {
-    display: block;
-    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 0;
     font: 400 12px var(--pixel);
     letter-spacing: 1px;
 }
 
-.contact-card input,
-.contact-card textarea {
+.topic-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 10px;
+}
+
+.topic-options input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.topic-options label {
+    padding: 10px 15px;
+    font: 400 11px var(--pixel);
+    letter-spacing: .4px;
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    box-shadow: 0 3px 0 var(--lav-3), 0 3px 0 2px var(--ink);
+    cursor: pointer;
+    transition: transform .12s, box-shadow .12s, background .12s;
+}
+
+.topic-options label:hover {
+    background: var(--lav-1);
+}
+
+.topic-options input:checked + label {
+    background: var(--accent);
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--accent-dark), 0 1px 0 2px var(--ink);
+}
+
+.topic-options input:focus-visible + label {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.topic-hint {
+    min-height: 1.5em;
+    margin: 12px 0 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 16px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.char-count {
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.contact-form input:not([type="radio"]),
+.contact-form textarea {
     width: 100%;
-    padding: 15px 18px;
+    padding: 14px 16px;
     font: 600 15px var(--display);
     color: var(--ink);
     background: var(--lav-1);
     border: 2px solid var(--ink);
     border-radius: 10px;
-    transition: border-color .2s, box-shadow .2s;
+    transition: border-color .2s, box-shadow .2s, background .2s;
 }
 
-.contact-card textarea {
+.contact-form textarea {
     resize: vertical;
-    min-height: 180px;
+    min-height: 170px;
 }
 
-.contact-card input:focus,
-.contact-card textarea:focus {
+.contact-form input:not([type="radio"]):focus,
+.contact-form textarea:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 4px #f8c9ff99;
+    background: var(--white);
+    border-color: var(--accent-dark);
+    box-shadow: 0 0 0 4px var(--lav-2);
+}
+
+.form-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 20px;
+    margin-top: 6px;
+}
+
+.form-foot .fine-print {
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.contact-form button[disabled] {
+    opacity: .7;
+    cursor: wait;
+}
+
+.form-status {
+    margin: 16px 0 0;
+    font-size: 14px;
+    color: #b0283f;
+}
+
+.form-status:empty {
+    display: none;
+}
+
+.form-status a {
+    color: inherit;
+}
+
+/* "Sent!" panel */
+.form-sent {
+    padding: 56px 30px 60px;
+    text-align: center;
+}
+
+.sent-badge {
+    display: grid;
+    place-items: center;
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 18px;
+    font: 400 40px var(--pixel);
+    background: var(--accent);
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+    box-shadow: 0 5px 0 var(--accent-dark), 0 5px 0 3px var(--ink);
+    animation: pop-in .35s cubic-bezier(.2, 1.3, .4, 1);
+}
+
+.form-sent h2 {
+    margin-bottom: 10px;
+}
+
+.form-sent p {
+    max-width: 380px;
+    margin: 0 auto 26px;
+    color: var(--ink-soft);
+}
+
+/* side column: mascot with a speech bubble, then the Discord card */
+.contact-side {
+    display: grid;
+    gap: 24px;
+}
+
+.mascot-card {
+    position: relative;
+    padding: 22px 22px 0;
+    text-align: center;
+    background: var(--lav-2);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.speech {
+    position: relative;
+    margin: 0 0 22px;
+    padding: 14px 16px;
+    font: 400 11px/1.6 var(--pixel);
+    letter-spacing: .3px;
+    text-align: left;
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 14px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* little tail on the bubble pointing at the mascot */
+.speech::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -9px;
+    width: 14px;
+    height: 14px;
+    background: var(--white);
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.mascot-card img {
+    width: 150px;
+    height: auto;
+    margin: 0 auto -6px;
+    filter: drop-shadow(4px 4px 0 var(--lav-3));
+    animation: bob 2.6s ease-in-out infinite;
+}
+
+@keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50%      { transform: translateY(-8px) rotate(2deg); }
+}
+
+.side-card {
+    padding: 22px;
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.side-card h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.side-card p {
+    margin: 0 0 18px;
+    font-size: 14px;
+    color: var(--ink-soft);
+}
+
+/* "Quick answers" + "Find me" under the contact form */
+.help-section {
+    margin-top: 110px;
+    background: var(--lav-2);
+    padding: 30px 0 calc(80px + var(--wave-h));
+}
+
+.help-layout {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items: start;
+}
+
+.elsewhere {
+    display: grid;
+    gap: 14px;
+}
+
+.elsewhere-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    color: var(--ink);
+    text-decoration: none;
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 0 var(--lav-3), 0 4px 0 3px var(--ink);
+    transition: transform .12s, box-shadow .12s;
+}
+
+.elsewhere-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--lav-3), 0 6px 0 3px var(--ink);
+}
+
+.elsewhere-card:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--lav-3), 0 1px 0 3px var(--ink);
+}
+
+.elsewhere-card b {
+    display: block;
+    font: 400 14px var(--pixel);
+    letter-spacing: .4px;
+}
+
+.elsewhere-card small {
+    font-size: 14px;
+    color: var(--ink-soft);
 }
 
 /* 404 */
@@ -833,6 +1639,249 @@ em,
 }
 
 
+/* ---------- Shared bits: wavy section tops, FAQ, custom-work card ---------- */
+
+/* Give a section class="wave-top" and it gets a wavy edge in its own color */
+.wave-top {
+    position: relative;
+}
+
+.wave-top::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(100% - 3px);
+    height: var(--wave-h);
+    background: inherit;
+    -webkit-mask: var(--wave) center / 100% 100% no-repeat;
+    mask: var(--wave) center / 100% 100% no-repeat;
+    pointer-events: none;
+}
+
+.wave-top:nth-of-type(even)::before {
+    transform: scaleX(-1);
+}
+
+/* Expandable questions */
+.faq {
+    display: grid;
+    gap: 12px;
+}
+
+.faq-item {
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 0 var(--lav-3), 0 4px 0 3px var(--ink);
+}
+
+.faq-item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+    font: 400 13px/1.4 var(--pixel);
+    letter-spacing: .3px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+/* the + that turns into a - when open */
+.faq-item summary::after {
+    content: "+";
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    font: 400 16px/1 var(--pixel);
+    background: var(--lav-2);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    transition: transform .2s, background .2s;
+}
+
+.faq-item[open] summary::after {
+    content: "\2212";
+    background: var(--accent);
+    transform: rotate(180deg);
+}
+
+.faq-item p {
+    margin: 0;
+    padding: 0 18px 18px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+}
+
+.faq-item p a {
+    color: var(--accent-dark);
+}
+
+.faq-layout {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    align-items: start;
+}
+
+/* "Need something custom?" card */
+.custom-card {
+    margin-top: 96px;
+    padding: 26px;
+    background: var(--accent);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    transform: rotate(-1.5deg);
+}
+
+.custom-card .eyebrow {
+    color: var(--ink);
+    opacity: .75;
+}
+
+.custom-card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.custom-card p {
+    margin: 0 0 20px;
+    font-size: 15px;
+    color: var(--ink);
+}
+
+.custom-card .button.primary {
+    --btn-base: var(--lav-3);
+    background: var(--white);
+}
+
+
+/* ---------- Scroll slider + page fade ---------- */
+
+/* Little scrollbar on the right; the handle is the PointingUpwards character,
+   which flips to point the way you're scrolling. Built by script.js. */
+.scroll-slider {
+    position: fixed;
+    right: 14px;
+    top: 50%;
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    width: 34px;
+    height: min(46vh, 420px);
+    transform: translateY(-50%);
+}
+
+.scroll-slider[hidden] {
+    display: none;
+}
+
+.scroll-slider-track {
+    position: relative;
+    width: 10px;
+    height: 100%;
+    background: var(--lav-2);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.scroll-slider-thumb {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 42px;
+    transform: translateX(-50%);
+    cursor: grab;
+    touch-action: none;
+}
+
+.scroll-slider.dragging .scroll-slider-thumb {
+    cursor: grabbing;
+}
+
+.scroll-slider-thumb img {
+    height: 42px;
+    width: auto;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    filter: drop-shadow(2px 2px 0 var(--ink));
+    transform: rotate(180deg);   /* points down by default */
+    transition: transform .12s ease;
+}
+
+.scroll-slider-thumb img.pointing-up            { transform: rotate(0); }
+.scroll-slider-thumb img.popping                { transform: rotate(180deg) scale(1.3); }
+.scroll-slider-thumb img.pointing-up.popping    { transform: rotate(0) scale(1.3); }
+
+/* the custom slider replaces the normal scrollbar when there's room for it beside the page */
+@media (min-width: 1220px) {
+    html.has-slider {
+        scrollbar-width: none;
+    }
+
+    html.has-slider::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* narrower screens: the page content would run under the slider, so use the normal scrollbar */
+@media (max-width: 1219px) {
+    .scroll-slider {
+        display: none;
+    }
+}
+
+/* Quick lavender fade when a page opens, and again when you click to another page */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: var(--lav-2);
+    opacity: 0;
+    pointer-events: none;
+    animation: page-fade-in .45s steps(8, end);
+}
+
+@keyframes page-fade-in {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+html.leaving body::after {
+    animation: none;
+    opacity: 1;
+    transition: opacity .35s steps(7, end);
+}
+
+
+/* Things slide up softly as they scroll into view (script.js adds these classes) */
+.reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity .6s ease, transform .6s cubic-bezier(.2, .8, .3, 1);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+
 /* ---------- 8. Responsive ---------- */
 
 @media (max-width: 900px) {
@@ -840,31 +1889,44 @@ em,
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .contact-grid {
+    .updates-grid,
+    .faq-layout,
+    .help-layout {
         grid-template-columns: 1fr;
-        gap: 50px;
     }
 
-    .contact-card {
+    .custom-card {
+        margin-top: 0;
         transform: none;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    /* mascot and Discord card sit side by side under the form */
+    .contact-side {
+        grid-template-columns: 1fr 1fr;
+        align-items: stretch;
     }
 }
 
 @media (max-width: 760px) {
     :root {
-        --header-h: auto;
+        --header-h: 108px;
     }
 
-    .wrap,
-    .site-header {
+    .wrap {
         width: min(1120px, calc(100% - 36px));
     }
 
     /* Logo + Discord on top, nav on its own row underneath */
     .site-header {
         flex-wrap: wrap;
-        gap: 14px 20px;
-        padding: 18px 0 14px;
+        align-content: center;
+        gap: 12px 20px;
+        padding-inline: 18px;
     }
 
     .site-header nav {
@@ -882,16 +1944,15 @@ em,
         --wave-h: 50px;
     }
 
-    .now-inner {
-        grid-template-columns: 1fr;
-        gap: 48px;
+    .staff-board {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 
     /* on phones there's no room beside the character, so center everything
        and show the right side of the picture instead */
     .hero {
         min-height: 520px;
-        padding: 130px 18px 100px;
+        padding: calc(var(--header-h) + 24px) 18px 100px;
         background-position: 72% center;
     }
 
@@ -925,24 +1986,28 @@ em,
         padding: 30px 0 calc(60px + var(--wave-h));
     }
 
-    .photo-stack {
-        width: 90%;
-        max-width: 470px;
-        margin-inline: auto;
-    }
-
+    /* footer stacks and centers on phones */
     .site-footer {
-        align-items: flex-start;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
     }
 
-    .site-footer p {
-        order: 3;
-        width: 100%;
+    .footer-copy {
+        flex-direction: column;
     }
 
-    .contact-card {
-        padding: 28px 22px;
-        box-shadow: 4px 4px 0 var(--ink);
+    .scroll-hint {
+        display: none;
+    }
+
+    .contact-form {
+        padding: 22px 18px 24px;
+    }
+
+    .form-row,
+    .contact-side {
+        grid-template-columns: 1fr;
     }
 
     .error-page {
@@ -968,4 +2033,5 @@ em,
     .hero-title img {
         animation: none;
     }
+
 }

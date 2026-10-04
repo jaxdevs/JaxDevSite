@@ -3,10 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="color-scheme" content="light">
         <title>JaxDev | Home</title>
         <meta name="description" content="I make games.">
         <link rel="canonical" href="https://jaxdev.dev/">
         <link rel="icon" type="image/png" href="Assets/JaxIcon.png">
+        <link rel="apple-touch-icon" href="Assets/JaxIcon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap">
         <link rel="stylesheet" href="styles.css">
 
         <meta property="og:type" content="website">
@@ -16,7 +21,7 @@
         <meta property="og:url" content="https://jaxdev.dev/">
         <meta property="og:image" content="https://jaxdev.dev/Assets/EmbedImageV1.png">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="theme-color" content="#c966d7">
+        <meta name="theme-color" content="#dd91eb">
     </head>
     <body>
         <a class="skip-link" href="#main">Skip to content</a>
@@ -40,6 +45,10 @@
                     <a class="button cream" href="shop/">Check my shop</a>
                     <a class="button pink" href="support">Need support?</a>
                 </div>
+                <a class="scroll-hint" href="#sneak-peeks" aria-label="Scroll down to the sneak peeks">
+                    <span>scroll</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg>
+                </a>
             </section>
 
             <section class="peeks-section" id="sneak-peeks">
@@ -47,40 +56,43 @@
                     <div class="section-heading">
                         <div>
                             <p class="eyebrow">Sneak peeks</p>
-                            <h2>Stuff I&rsquo;ve been<br>working on.</h2>
+                            <h2>Featured Sneak Peeks</h2>
                         </div>
-                        <p class="intro">I dont got a name for the game yet but yea its gonna be good. Its like a physics game mixed with open world and possible story mode, just anything I think is cool.</p>
+                        <p class="intro">Discord gets sneak peeks first!</p>
                     </div>
-                    <!-- To add a sneak peek: copy one <li> block, then change the image path (twice),
-                         the caption (twice) and the alt text. Newest first looks best. -->
+                    <!-- To add a sneak peek: copy one <li> block, then change
+                         - href: the full-size image (opens when clicked)
+                         - img src: a small copy for the card (~720px wide, saved in Assets/thumbs/;
+                           using the full-size image here works too, it just loads slower)
+                         - the caption (twice) and the alt text. Newest first looks best. -->
                     <ul class="peek-grid">
                         <li>
                             <a class="peek" href="Assets/BroDude.png" data-lightbox data-caption="The main guy">
-                                <img src="Assets/BroDude.png" alt="Low-poly bearded character waving" loading="lazy">
+                                <img src="Assets/thumbs/BroDude.webp" alt="Low-poly bearded character waving" loading="lazy">
                                 <span class="peek-caption">The main guy</span>
                             </a>
                         </li>
                         <li>
                             <a class="peek" href="Assets/PointingUpwards.png" data-lightbox data-caption="Hoodie dude">
-                                <img src="Assets/PointingUpwards.png" alt="Character in a teal hoodie doing peace signs" loading="lazy">
+                                <img src="Assets/thumbs/PointingUpwards.webp" alt="Character in a teal hoodie doing peace signs" loading="lazy">
                                 <span class="peek-caption">Hoodie dude</span>
                             </a>
                         </li>
                         <li>
                             <a class="peek" href="Assets/HeMan.png" data-lightbox data-caption="Sword guy">
-                                <img src="Assets/HeMan.png" alt="Low-poly character holding a big sword" loading="lazy">
+                                <img src="Assets/thumbs/HeMan.webp" alt="Low-poly character holding a big sword" loading="lazy">
                                 <span class="peek-caption">Sword guy</span>
                             </a>
                         </li>
                         <li>
                             <a class="peek" href="Assets/PLEASETRISTER.png" data-lightbox data-caption="Face test">
-                                <img src="Assets/PLEASETRISTER.png" alt="Close-up of the hoodie character's face" loading="lazy">
+                                <img src="Assets/thumbs/PLEASETRISTER.webp" alt="Close-up of the hoodie character's face" loading="lazy">
                                 <span class="peek-caption">Face test</span>
                             </a>
                         </li>
                         <li>
                             <a class="peek" href="Assets/Favicon.png" data-lightbox data-caption="First doodle">
-                                <img src="Assets/Favicon.png" alt="Hand-drawn doodle" loading="lazy">
+                                <img src="Assets/thumbs/Favicon.webp" alt="Hand-drawn doodle" loading="lazy">
                                 <span class="peek-caption">First doodle</span>
                             </a>
                         </li>
@@ -88,29 +100,145 @@
                 </div>
             </section>
 
-            <section class="now-section">
-                <div class="wrap now-inner">
-                    <div class="now-card">
-                        <p class="eyebrow">I know how to code html btw</p>
-                        <h2>Just left this here but</h2>
-                        <p>Umm I guess please subscribe to my YouTube channel found in the footer but yea.</p>
-                        <a class="button discord" href="https://discord.gg/5qxVttwgay">Join my Discord <span>&rarr;</span></a>
+            <section class="updates-section" id="updates">
+                <div class="wrap">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">What&rsquo;s the happs</p>
+                            <h2>Latest<br>updates.</h2>
+                        </div>
+                        <p class="intro">What I&rsquo;ve been up to lately. Bigger stuff usually drops in the Discord first.</p>
                     </div>
-                    <div class="photo-stack">
-                        <img class="stack-back" src="Assets/HeMan.png" alt="Low-poly 3D model holding a sword">
-                        <img class="stack-front" src="Assets/PLEASETRISTER.png" alt="Close-up of a cartoon 3D character's face">
+
+                    <div class="updates-grid">
+                        <div class="devlog">
+                            <!-- DEVLOG. To post an update: copy one <li class="log-entry"> block and paste it at the
+                                 TOP of the list, then change the date (twice: datetime="YYYY-MM-DD" and the text),
+                                 the title and the text. An image is optional:
+                                 <img src="Assets/thumbs/YourPic.webp" alt="what it shows" loading="lazy">
+                                 Only the newest 3 show at first; older ones go behind a "Show older updates" button. -->
+                            <ol class="log-list">
+                                <li class="log-entry">
+                                    <time datetime="2026-10-03">Oct 3, 2026</time>
+                                    <h3>Spruced up the site</h3>
+                                    <p>New look, sneak peeks of the game, a better contact page and a shop. More stuff coming soon.</p>
+                                </li>
+                            </ol>
+                            <button class="button log-more" type="button" hidden>Show older updates</button>
+                        </div>
+
+                        <aside class="updates-side">
+                            <!-- GAME PROGRESS. Each item is class="done", "doing" or "todo".
+                                 The progress bar and % work themselves out from these. -->
+                            <div class="progress-card">
+                                <div class="progress-top">
+                                    <p class="eyebrow">Currently making</p>
+                                    <span class="status-pill">Early prototype</span>
+                                </div>
+                                <h3>Manky</h3>
+                                <p class="progress-blurb">A Vr gorilla tag locomotion game.</p>
+                                <div class="progress-bar" role="progressbar" aria-label="Game progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="38">
+                                    <span style="width: 38%"></span>
+                                </div>
+                                <p class="progress-label"><b class="progress-pct">5%</b> done</p>
+                                <ul class="progress-list">
+                                    <li class="done">Player Model and forest</li>
+                                    <li class="doing">Touch ups to lighting</li>
+                                    <li class="todo">Add a main game loop</li>
+                                </ul>
+                            </div>
+
+                            <!-- Live Discord numbers are loaded by script.js from your invite link -->
+                            <div class="discord-card" id="discord-card" data-invite="5qxVttwgay">
+                                <div class="discord-head">
+                                    <span class="discord-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2.1a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4a12.9 12.9 0 0 1-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.7-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></span>
+                                    <div>
+                                        <p class="eyebrow">Discord</p>
+                                        <h3 class="discord-name">jax&rsquo;s Fortress</h3>
+                                    </div>
+                                </div>
+                                <p class="discord-stats" hidden>
+                                    <span class="online-dot" aria-hidden="true"></span>
+                                    <span><b class="discord-online"></b> online</span>
+                                    <span class="stat-sep" aria-hidden="true">&middot;</span>
+                                    <span><b class="discord-members"></b> members</span>
+                                </p>
+                                <p class="discord-blurb">Sneak peeks drop there first. Come hang out.</p>
+                                <a class="button primary" href="https://discord.gg/5qxVttwgay">Join the server</a>
+                            </div>
+                        </aside>
                     </div>
+                </div>
+            </section>
+
+            <section class="now-section" id="team">
+                <div class="wrap">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">Does anyone even read this?</p>
+                            <h2>The team.</h2>
+                        </div>
+                        <div class="team-cta">
+                            <p class="intro">The people helping make this happen. Come say hi in the Discord.</p>
+                            <div class="social-buttons">
+                                <a class="button youtube" href="https://www.youtube.com/@notjaxdev?sub_confirmation=1">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg>
+                                    Subscribe
+                                </a>
+                                <a class="button discord" href="https://discord.gg/5qxVttwgay">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2.1a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4a12.9 12.9 0 0 1-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.7-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>
+                                    Join my Discord
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STAFF BOARD. To add someone: copy one <li class="staff-card"> block and change
+                         - the picture: <img src="Assets/their-pic.png" alt="">  (square works best)
+                           no picture? use <span>A</span> with their first letter instead of the <img>
+                         - the name, the one-line description
+                         - the badges. Pick from: owner, dev, mod, artist, music, tester, helper
+                           e.g. <span class="badge mod">Moderator</span>  (the class sets the color,
+                           the text inside is what shows, so you can write whatever you want) -->
+                    <ul class="staff-board">
+                        <li class="staff-card">
+                            <div class="staff-avatar"><img src="Assets/JaxIcon.png" alt=""></div>
+                            <h3>Jax</h3>
+                            <div class="badges">
+                                <span class="badge owner">Owner</span>
+                                <span class="badge dev">Developer</span>
+                            </div>
+                            <p>sub to my YouTube</p>
+                        </li>
+
+                        <!-- placeholder slot, delete it once the board has a few people on it -->
+                        <li class="staff-card is-empty">
+                            <div class="staff-avatar"><span>?</span></div>
+                            <h3>More soon</h3>
+                            <p>New people get pinned up here.</p>
+                        </li>
+                    </ul>
                 </div>
             </section>
         </main>
 
         <footer class="site-footer wrap">
-            <a class="logo" href="./">JAX<span>DEV</span></a>
-            <p>Check the other pages<br>&copy; <span class="year"></span> Jax Dev.</p>
+            <div class="footer-brand">
+                <a class="logo" href="./">JAX<span>DEV</span></a>
+                <p>Check the other pages</p>
+            </div>
+            <nav class="footer-links" aria-label="Footer">
+                <a href="./">Home</a>
+                <a href="shop/">Shop</a>
+                <a href="support">Support</a>
+            </nav>
             <div class="socials">
-                <a href="https://github.com/jaxdevs">GitHub</a>
-                <a href="https://youtube.com/@notjaxdev">YouTube</a>
-                <a href="https://discord.gg/5qxVttwgay">Discord</a>
+                <a href="https://github.com/jaxdevs" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg></a>
+                <a href="https://youtube.com/@notjaxdev" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/></svg></a>
+                <a href="https://discord.gg/5qxVttwgay" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.9 19.9 0 0 0 6 3l1.3-2.1a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4a12.9 12.9 0 0 1-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3c.5-5.2-.9-9.7-3.7-13.7ZM8 15.3c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.5 8 10.5s2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg></a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; <span class="year"></span> Jax Dev. Penis</p>
             </div>
         </footer>
 

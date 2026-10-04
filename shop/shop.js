@@ -283,7 +283,36 @@
     });
 
 
+    // Big "Featured" card at the top. Uses the product with featured: true in products.js,
+    // otherwise the first paid product, otherwise the first product.
+    function renderFeatured() {
+        var slot = document.getElementById("featured");
+        if (!slot) return;
+        var p = PRODUCTS.filter(function (x) { return x.featured; })[0] ||
+            PRODUCTS.filter(function (x) { return x.price; })[0] || PRODUCTS[0];
+        if (!p) { slot.hidden = true; return; }
+
+        var open = el("a", { class: "button primary", href: "#" + p.slug }, ["Take a look ", el("span", { text: "\u2192" })]);
+        open.addEventListener("click", function (e) {
+            e.preventDefault();
+            openProduct(p.slug);
+        });
+
+        slot.textContent = "";
+        slot.appendChild(el("div", { class: "featured-card" }, [
+            el("span", { class: "featured-tag", text: "Featured" }),
+            el("div", { class: "featured-img" }, [
+                p.images && p.images[0] ? el("img", { src: p.images[0], alt: "" }) : placeholder(p),
+                el("span", { class: "price-badge" + (p.price ? "" : " is-free"), text: money(p.price) })
+            ]),
+            el("h3", { text: p.title }),
+            el("p", { text: p.blurb }),
+            open
+        ]));
+    }
+
     renderChips();
     renderGrid();
+    renderFeatured();
     if (location.hash.length > 1) openProduct(location.hash.slice(1), true);
 })();
